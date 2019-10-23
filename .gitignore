@@ -1,0 +1,40 @@
+/target/
+.DS_Store
+git
+deploy
+build*
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+/build/
+
+### VS Code ###
+.vscode/
+*.tar.gz
+
+node_modules
+!/dist/test.html
+!/dist/test.js
+/dist
+lib
+lib-style
+coverage
+es

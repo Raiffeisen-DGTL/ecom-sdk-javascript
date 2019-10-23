@@ -1,0 +1,53 @@
+.cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+    max-width: 100%;
+    height: 637px;
+    max-height: 100%;
+}
+
+.cross {
+    right: 17px;
+    top: 13px;
+    color: rgb(102, 102, 102);
+    position: absolute;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-family: "Arial", sans-serif;
+    z-index: 101;
+}
+
+.inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: white;
+}
+
+.iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media (max-width: 450px) {
+    .wrap {
+        height: 100%;
+    }
+
+    .inner {
+        -webkit-overflow-scrolling: touch;
+        overflow: auto;
+    }
+}
