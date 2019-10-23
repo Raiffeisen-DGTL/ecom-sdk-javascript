@@ -1,0 +1,4 @@
+.body-scroll-disable {
+    overflow: hidden;
+    position: relative;
+}
