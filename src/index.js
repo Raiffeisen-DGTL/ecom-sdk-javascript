@@ -21,14 +21,18 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(paymentData = {}, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
+    constructor(publicId, failUrl, successUrl, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
         if (targetElem instanceof HTMLElement) {
             this.mount = targetElem;
         } else {
             this.mount = document.body;
         }
 
-        this.paymentData = { paymentData, version: VERSION };
+        this.publicId = publicId;
+        this.failUrl = failUrl;
+        this.successUrl = successUrl;
+        this.version = VERSION;
+
         this.url = prepareUrl(url);
 
         this.messageBinding = addMessageListener(
@@ -42,21 +46,21 @@ class PaymentPageSdk {
             return;
         }
 
-        const { paymentData, version } = this.paymentData;
-        this.paymentData = { publicId: paymentData, version, ...props };
+        const { publicId, version } = this;
 
-        console.log(this.paymentData);
+        const paymentData = { publicId, version, ...props };
+
+        console.log(paymentData);
 
         this.paymentPage = new PaymentPage();
 
         this.mount.appendChild(this.paymentPage.execute({
-            paymentData: this.paymentData,
             onClose: this.closePopup,
             onForceClose: this.forceClosePopup,
             url: this.url
         }));
 
-        this.submitForm(this.paymentPage.name);
+        this.submitForm(this.paymentPage.name, paymentData);
 
         disableScroll();
     }
@@ -92,15 +96,15 @@ class PaymentPageSdk {
         enableScroll();
     };
 
-    submitForm = (target = '_self') => {
+    submitForm = (target = '_self', paymentData) => {
         const form = document.createElement('form');
         form.setAttribute('action', this.url);
         form.setAttribute('method', 'POST');
         form.setAttribute('target', target);
 
-        Object.keys(this.paymentData).forEach(paymentDataKey => {
+        Object.keys(paymentData).forEach(paymentDataKey => {
             const input = document.createElement('input');
-            const value = prepareValue(this.paymentData[paymentDataKey]);
+            const value = prepareValue(paymentData[paymentDataKey]);
 
             input.setAttribute('value', value);
             input.setAttribute('name', paymentDataKey);
@@ -115,23 +119,22 @@ class PaymentPageSdk {
     }
 
     open = (isTargetBlank, props) => {
-        // console.log(this.paymentData);
-        // this.paymentData = { ...props };
-        const { paymentData, version } = this.paymentData;
-        this.paymentData = { publicId: paymentData, version, ...props };
+        const { publicId, version } = this;
 
-        this.submitForm(isTargetBlank ? '_blank' : '_self');
+        const paymentData = { publicId, version, ...props };
+
+        this.submitForm(isTargetBlank ? '_blank' : '_self', paymentData);
     }
 
     handleFinishPayment = content => {
-        if (content.result === SUCCESS_RESULT && this.paymentData.successUrl) {
-            changeLocation(this.paymentData.successUrl);
+        if (content.result === SUCCESS_RESULT && this.successUrl) {
+            changeLocation(this.successUrl);
 
             return;
         }
 
-        if (content.result === FAILED_RESULT && this.paymentData.failUrl) {
-            changeLocation(this.paymentData.failUrl);
+        if (content.result === FAILED_RESULT && this.failUrl) {
+            changeLocation(this.failUrl);
 
             return;
         }

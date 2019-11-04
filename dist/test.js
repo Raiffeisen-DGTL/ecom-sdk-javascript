@@ -74,7 +74,8 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk( getPaymentData().publicId, getPaymentData().failUrl,
+            getPaymentData().successUrl, null, getTarget());
 
         const {
             amount, orderId, comment
@@ -86,7 +87,8 @@
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, getPaymentData().failUrl,
+            getPaymentData().successUrl, null, getTarget());
 
         const {
             amount, orderId, successUrl, failUrl, comment
@@ -98,7 +100,8 @@
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, getPaymentData().failUrl,
+            getPaymentData().successUrl, null, getTarget());
 
         const {
             amount, orderId, successUrl, failUrl, comment
