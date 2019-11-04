@@ -28,7 +28,7 @@ class PaymentPageSdk {
             this.mount = document.body;
         }
 
-        this.paymentData = { ...paymentData, version: VERSION };
+        this.paymentData = { paymentData, version: VERSION };
         this.url = prepareUrl(url);
 
         this.messageBinding = addMessageListener(
@@ -37,10 +37,15 @@ class PaymentPageSdk {
         );
     }
 
-    openPopup = () => {
+    openPopup = props => {
         if (this.paymentPage && this.paymentPage.isMount()) {
             return;
         }
+
+        const { paymentData, version } = this.paymentData;
+        this.paymentData = { publicId: paymentData, version, ...props };
+
+        console.log(this.paymentData);
 
         this.paymentPage = new PaymentPage();
 
@@ -109,7 +114,12 @@ class PaymentPageSdk {
         this.mount.removeChild(form);
     }
 
-    open = isTargetBlank => {
+    open = (isTargetBlank, props) => {
+        // console.log(this.paymentData);
+        // this.paymentData = { ...props };
+        const { paymentData, version } = this.paymentData;
+        this.paymentData = { publicId: paymentData, version, ...props };
+
         this.submitForm(isTargetBlank ? '_blank' : '_self');
     }
 

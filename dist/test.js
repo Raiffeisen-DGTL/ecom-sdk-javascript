@@ -74,20 +74,38 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
 
-        paymentPage.openPopup();
+        const {
+            amount, orderId, comment
+        } = getPaymentData();
+
+        paymentPage.openPopup({
+            amount, orderId, comment
+        });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
-        paymentPage.open();
+        const {
+            amount, orderId, successUrl, failUrl, comment
+        } = getPaymentData();
+
+        paymentPage.open(false, {
+            amount, orderId, successUrl, failUrl, comment
+        });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
-        paymentPage.open(true);
+        const {
+            amount, orderId, successUrl, failUrl, comment
+        } = getPaymentData();
+
+        paymentPage.open(true, {
+            amount, orderId, successUrl, failUrl, comment
+        });
     });
 })();
