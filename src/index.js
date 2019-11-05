@@ -21,7 +21,7 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(publicId, failUrl, successUrl, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
+    constructor(publicId, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
         if (targetElem instanceof HTMLElement) {
             this.mount = targetElem;
         } else {
@@ -29,8 +29,6 @@ class PaymentPageSdk {
         }
 
         this.publicId = publicId;
-        this.failUrl = failUrl;
-        this.successUrl = successUrl;
         this.version = VERSION;
 
         this.url = prepareUrl(url);
@@ -41,16 +39,16 @@ class PaymentPageSdk {
         );
     }
 
-    openPopup = props => {
+    openPopup = (amount, props) => {
         if (this.paymentPage && this.paymentPage.isMount()) {
             return;
         }
 
         const { publicId, version } = this;
 
-        const paymentData = { publicId, version, ...props };
-
-        console.log(paymentData);
+        const paymentData = {
+            publicId, version, amount, ...props
+        };
 
         this.paymentPage = new PaymentPage();
 
@@ -118,16 +116,28 @@ class PaymentPageSdk {
         this.mount.removeChild(form);
     }
 
-    open = (isTargetBlank, props) => {
+    openWindow = props => {
         const {
-            publicId, version, failUrl, successUrl
+            publicId, version
         } = this;
 
         const paymentData = {
-            publicId, version, failUrl, successUrl, ...props
+            publicId, version, ...props
         };
 
-        this.submitForm(isTargetBlank ? '_blank' : '_self', paymentData);
+        this.submitForm('_blank', paymentData);
+    }
+
+    replace = props => {
+        const {
+            publicId, version
+        } = this;
+
+        const paymentData = {
+            publicId, version, ...props
+        };
+
+        this.submitForm('_self', paymentData);
     }
 
     handleFinishPayment = content => {

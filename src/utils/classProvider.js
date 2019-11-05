@@ -10,8 +10,12 @@ export default TargetClass => {
             instance.openPopup(...args);
         }
 
-        open(...args) {
-            instance.open(...args);
+        openWindow(...args) {
+            instance.openWindow(...args);
+        }
+
+        replace(...args) {
+            instance.replace(...args);
         }
     };
 };

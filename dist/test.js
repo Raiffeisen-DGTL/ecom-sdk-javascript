@@ -38,7 +38,6 @@
             orderId: document.getElementById('orderId').value,
             successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
-            publicId: document.getElementById('publicId').value,
             comment: document.getElementById('comment').value
         };
 
@@ -74,41 +73,38 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk( getPaymentData().publicId, getPaymentData().failUrl,
-            getPaymentData().successUrl, null, getTarget());
+        var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
+
+        const { amount } = getPaymentData();
 
         const {
-            amount, orderId, comment
+            orderId, comment
         } = getPaymentData();
 
-        paymentPage.openPopup({
-            amount, orderId, comment
+        paymentPage.openPopup(amount, {
+            orderId, comment
         });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, getPaymentData().failUrl,
-            getPaymentData().successUrl, null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
         const {
-            amount, orderId, comment
+            amount
         } = getPaymentData();
 
-        paymentPage.open(false, {
-            amount, orderId, comment
-        });
+        paymentPage.replace({ amount });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, getPaymentData().failUrl,
-            getPaymentData().successUrl, null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
         const {
-            amount, orderId, comment
+            amount
         } = getPaymentData();
 
-        paymentPage.open(true, {
-            amount, orderId, comment
+        paymentPage.openWindow({
+            amount
         });
     });
 })();
