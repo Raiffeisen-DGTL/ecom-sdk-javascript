@@ -119,9 +119,13 @@ class PaymentPageSdk {
     }
 
     open = (isTargetBlank, props) => {
-        const { publicId, version } = this;
+        const {
+            publicId, version, failUrl, successUrl
+        } = this;
 
-        const paymentData = { publicId, version, ...props };
+        const paymentData = {
+            publicId, version, failUrl, successUrl, ...props
+        };
 
         this.submitForm(isTargetBlank ? '_blank' : '_self', paymentData);
     }

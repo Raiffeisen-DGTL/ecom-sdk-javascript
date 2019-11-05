@@ -91,11 +91,11 @@
             getPaymentData().successUrl, null, getTarget());
 
         const {
-            amount, orderId, successUrl, failUrl, comment
+            amount, orderId, comment
         } = getPaymentData();
 
         paymentPage.open(false, {
-            amount, orderId, successUrl, failUrl, comment
+            amount, orderId, comment
         });
     });
 
@@ -104,11 +104,11 @@
             getPaymentData().successUrl, null, getTarget());
 
         const {
-            amount, orderId, successUrl, failUrl, comment
+            amount, orderId, comment
         } = getPaymentData();
 
         paymentPage.open(true, {
-            amount, orderId, successUrl, failUrl, comment
+            amount, orderId, comment
         });
     });
 })();
