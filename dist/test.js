@@ -105,6 +105,12 @@
 
         paymentPage.openWindow({
             amount
-        });
+        })
+            .then(resolve => {
+                console.log(resolve);
+            })
+            .catch(() => {
+                console.log('ERROR');
+            });
     });
 })();

@@ -116,17 +116,33 @@ class PaymentPageSdk {
         this.mount.removeChild(form);
     }
 
-    openWindow = props => {
+    openWindow = props => new Promise((resolve, reject) => {
         const {
             publicId, version
         } = this;
-
         const paymentData = {
             publicId, version, ...props
         };
 
-        this.submitForm('_blank', paymentData);
-    }
+        if (this.messageBinding) {
+            resolve(this.submitForm('_blank', paymentData));
+        } else {
+            console.log('ERROR');
+            reject();
+        }
+    })
+
+    // openWindow = props => {
+    //     const {
+    //         publicId, version
+    //     } = this;
+    //
+    //     const paymentData = {
+    //         publicId, version, ...props
+    //     };
+    //
+    //     this.submitForm('_blank', paymentData);
+    // }
 
     replace = props => {
         const {

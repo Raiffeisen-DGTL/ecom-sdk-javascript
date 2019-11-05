@@ -12,6 +12,14 @@ export default TargetClass => {
 
         openWindow(...args) {
             instance.openWindow(...args);
+
+            return new Promise((resolve, reject) => {
+                if (args) {
+                    resolve(args);
+                } else {
+                    reject();
+                }
+            });
         }
 
         replace(...args) {
