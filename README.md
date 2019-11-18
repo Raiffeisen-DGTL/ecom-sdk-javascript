@@ -20,26 +20,14 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 Запуск
 
 ```
-const paymentPage = new PaymentPageSdk(
-    {
-        amount: 10.11, // обязательное
-        orderId: '8277611111532asdf', // необязательное
-        merchantUrl: 'http://google.com', // необязательное
-        merchantName: 'CASTORAMA', // необязательное
-        successUrl: 'https://castorama-ecom-staging.oggy.co/raiffeisen/index/success/', // необязательное
-        failUrl: 'https://castorama-ecom-staging.oggy.co/raiffeisen/index/fail/', // необязательное
-        publicId: '000001680200002-80200002', // обязательное
-        phone: '79833001077', // необязательное
-        extra: { qwe: 'qwe' }, // необязательное
-        receipt: { qwe: 'adsf' } // необязательное
-    },
-    document.getElementById('mount'), // в какой элемент бует монтироваться попап, document.body используется если передан не HTMLElement
-    https://e-commerce.raiffeisen.ru/pay // целевой url для payment-page, default https://e-commerce.raiffeisen.ru/pay
-);
+const paymentPage = new PaymentPageSdk( '000001680211111-80211111');
 
-paymentPage.open(true); // открыть в новом оке
-paymentPage.open(); // открыть в текущем окне
-paymentPage.openPopup(); // открыть в popup
+paymentPage.openWindow(10.11); // открыть в новом окне
+paymentPage.replace(10.11); // открыть в текущем окне
+paymentPage.openPopup(10.11, {orderId: '8277611111532', 
+                              comment: 'Тирольский пирог с яблоками, грушами, ветчиной, сыром, ананасами, 50см'} /* необязательное */
+); // открыть в popup
+
 ```
 
 ## Дополнительно

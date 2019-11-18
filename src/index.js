@@ -21,42 +21,25 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(paymentData = {}, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
+    constructor(publicId, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
         if (targetElem instanceof HTMLElement) {
             this.mount = targetElem;
         } else {
             this.mount = document.body;
         }
 
-        this.paymentData = { ...paymentData, version: VERSION };
+        this.publicId = publicId;
+        this.version = VERSION;
+        // this.successUrl = successUrl;
+        // this.failUrl = failUrl;
+
         this.url = prepareUrl(url);
-
-        this.messageBinding = addMessageListener(
-            window,
-            { finish: this.handleFinishPayment }
-        );
     }
 
-    openPopup = () => {
-        if (this.paymentPage && this.paymentPage.isMount()) {
-            return;
-        }
+    closePopup = res => () => {
+        // res(console.log("closePopupResolve"));
+        res();
 
-        this.paymentPage = new PaymentPage();
-
-        this.mount.appendChild(this.paymentPage.execute({
-            paymentData: this.paymentData,
-            onClose: this.closePopup,
-            onForceClose: this.forceClosePopup,
-            url: this.url
-        }));
-
-        this.submitForm(this.paymentPage.name);
-
-        disableScroll();
-    }
-
-    closePopup = () => {
         if (
             (this.confirm && this.confirm.isMount())
             || !this.paymentPage
@@ -64,7 +47,6 @@ class PaymentPageSdk {
         ) {
             return;
         }
-
         this.confirm = new Confirm();
 
         this.mount.appendChild(this.confirm.execute({
@@ -83,19 +65,20 @@ class PaymentPageSdk {
         }
 
         removeMessageListener(window, this.messageBinding);
+        this.messageBinding = null;
 
         enableScroll();
     };
 
-    submitForm = (target = '_self') => {
+    submitForm = (target = '_self', paymentData) => {
         const form = document.createElement('form');
         form.setAttribute('action', this.url);
         form.setAttribute('method', 'POST');
         form.setAttribute('target', target);
 
-        Object.keys(this.paymentData).forEach(paymentDataKey => {
+        Object.keys(paymentData).forEach(paymentDataKey => {
             const input = document.createElement('input');
-            const value = prepareValue(this.paymentData[paymentDataKey]);
+            const value = prepareValue(paymentData[paymentDataKey]);
 
             input.setAttribute('value', value);
             input.setAttribute('name', paymentDataKey);
@@ -103,27 +86,89 @@ class PaymentPageSdk {
             form.appendChild(input);
         });
 
+
         this.mount.appendChild(form);
         form.submit();
 
         this.mount.removeChild(form);
     }
 
-    open = isTargetBlank => {
-        this.submitForm(isTargetBlank ? '_blank' : '_self');
-    }
-
-    handleFinishPayment = content => {
-        if (content.result === SUCCESS_RESULT && this.paymentData.successUrl) {
-            changeLocation(this.paymentData.successUrl);
-
+    openPopup = (amount, props) => new Promise((resolve, reject) => {
+        if (this.paymentPage && this.paymentPage.isMount() && this.messageBinding) {
             return;
         }
 
-        if (content.result === FAILED_RESULT && this.paymentData.failUrl) {
-            changeLocation(this.paymentData.failUrl);
+        const { publicId, version } = this;
+        const paymentData = {
+            ...props, publicId, version, amount, successUrl: '#', failUrl: '#'
+        };
 
-            return;
+        this.paymentPage = new PaymentPage();
+
+        this.mount.appendChild(this.paymentPage.execute({
+            onClose: this.closePopup(resolve),
+            onForceClose: this.forceClosePopup,
+            external: {
+                resolve
+            },
+            url: this.url
+        }));
+
+        const { successUrl, failUrl } = props;
+
+        this.messageBinding = addMessageListener(
+            window,
+            { finish: this.handleFinishPayment(resolve, reject, successUrl, failUrl) }
+        );
+
+        this.submitForm(this.paymentPage.name, paymentData);
+
+        disableScroll();
+    })
+
+    openWindow = props => {
+        const {
+            publicId, version
+        } = this;
+
+        const paymentData = {
+            publicId, version, ...props
+        };
+
+        this.submitForm('_blank', paymentData);
+    }
+
+    replace = props => {
+        const {
+            publicId, version
+        } = this;
+
+        const paymentData = {
+            publicId, version, ...props
+        };
+
+        this.submitForm('_self', paymentData);
+    }
+
+    handleFinishPayment = (res, rej, successUrl, failUrl) => content => {
+        if (content.result === SUCCESS_RESULT) {
+            res();
+
+            if (successUrl) {
+                changeLocation(successUrl);
+
+                return;
+            }
+        }
+
+        if (content.result === FAILED_RESULT) {
+            rej();
+
+            if (failUrl) {
+                changeLocation(failUrl);
+
+                return;
+            }
         }
 
         this.forceClosePopup();

@@ -38,7 +38,6 @@
             orderId: document.getElementById('orderId').value,
             successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
-            publicId: document.getElementById('publicId').value,
             comment: document.getElementById('comment').value
         };
 
@@ -74,20 +73,45 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
 
-        paymentPage.openPopup();
+        var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
+
+        const { amount, successUrl, failUrl } = getPaymentData();
+
+        const {
+            orderId, comment
+        } = getPaymentData();
+
+        paymentPage.openPopup(amount, {
+            orderId, comment, successUrl
+        })
+            .then(resolve => {
+                console.log(resolve, "closePopup");
+            })
+            .catch(() => {
+                console.log("reject");
+            });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
-        paymentPage.open();
+        const {
+            amount, successUrl, failUrl
+        } = getPaymentData();
+ 
+        paymentPage.replace({ amount, successUrl, failUrl });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
 
-        paymentPage.open(true);
+        const {
+            amount, successUrl, failUrl
+        } = getPaymentData();
+
+        paymentPage.openWindow({
+            amount, successUrl, failUrl
+        })        
     });
 })();

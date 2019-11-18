@@ -4,15 +4,15 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "clean": "rimraf lib lib-style dist/payment.* es",
-    "lint": "NODE_PATH=. node ./node_modules/eslint/bin/eslint.js ./src",
+    "clean": "cross-env rimraf lib lib-style dist/payment.* es",
+    "lint": "cross-env NODE_PATH=. node ./node_modules/eslint/bin/eslint.js ./src",
     "prepare": "npm run clean && npm run build",
     "build": "npm run build:commonjs && npm run build:styled:commonjs && npm run build:iife && npm run build:iife:min && npm run build:iife:styled:min",
-    "build:commonjs": "STYLE_EXTRACT=true FORMAT=cjs NODE_ENV=production BABEL_ENV=commonjs rollup -c -o lib-style/index.js",
-    "build:styled:commonjs": "BABEL_ENV=commonjs FORMAT=cjs NODE_ENV=production rollup -c -o lib/index.js",
-    "build:iife": "NODE_ENV=development rollup -c -o dist/payment.styled.js",
-    "build:iife:styled:min": "STYLE_EXTRACT=false NODE_ENV=production rollup -c -o dist/payment.styled.min.js",
-    "build:iife:min": "STYLE_EXTRACT=true STYLE_EXTRACT=true NODE_ENV=production rollup -c -o dist/payment.min.js"
+    "build:commonjs": "cross-env STYLE_EXTRACT=true FORMAT=cjs NODE_ENV=production BABEL_ENV=commonjs rollup -c -o lib-style/index.js",
+    "build:styled:commonjs": "cross-env BABEL_ENV=commonjs FORMAT=cjs NODE_ENV=production rollup -c -o lib/index.js",
+    "build:iife": "cross-env NODE_ENV=development rollup -c -o dist/payment.styled.js",
+    "build:iife:styled:min": "cross-env STYLE_EXTRACT=false NODE_ENV=production rollup -c -o dist/payment.styled.min.js",
+    "build:iife:min": "cross-env STYLE_EXTRACT=true STYLE_EXTRACT=true NODE_ENV=production rollup -c -o dist/payment.min.js"
   },
   "files": [
     "lib",
@@ -40,7 +40,7 @@
     "create-react-class": "^15.6.3",
     "cross-env": "^5.2.0",
     "es3ify": "^0.2.0",
-    "eslint": "^6.2.0",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "glob": "^7.1.4",
