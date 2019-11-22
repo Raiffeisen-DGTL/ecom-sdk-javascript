@@ -37,6 +37,7 @@ class PaymentPageSdk {
     }
 
     closePopup = res => () => {
+        console.log("CLOSEPOPUP");
         // res(console.log("closePopupResolve"));
         res();
 
@@ -56,6 +57,7 @@ class PaymentPageSdk {
     };
 
     forceClosePopup = () => {
+        console.log("FORCECLOSEPOPUP");
         if (this.paymentPage) {
             this.paymentPage.unmount();
         }
@@ -162,7 +164,7 @@ class PaymentPageSdk {
         }
 
         if (content.result === FAILED_RESULT) {
-            rej();
+            rej("test");
 
             if (failUrl) {
                 changeLocation(failUrl);

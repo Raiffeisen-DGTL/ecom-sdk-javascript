@@ -29,16 +29,16 @@
     document.getElementById('orderId').value = Math.floor(Math.random() * 99999).toString().substr(0, 5);
 
     var getPaymentData = function () {
-        var extraString = document.getElementById('extra').value;
-        var receiptString = document.getElementById('receipt').value;
-        var styleString = document.getElementById('style').value;
+        var extraString = document.getElementById('extra').value; // параметры, которые придут пользователю (любые данные)
+        var receiptString = document.getElementById('receipt').value; // нужен для того, чтобы зарегистрировать чек
+        var styleString = document.getElementById('style').value; // мерч может сам настроить стилизацию
 
         var result = {
-            amount: document.getElementById('amount').value,
-            orderId: document.getElementById('orderId').value,
-            successUrl: document.getElementById('successUrl').value,
+            amount: document.getElementById('amount').value, // цена
+            orderId: document.getElementById('orderId').value, // номер заказа
+            successUrl: document.getElementById('successUrl').value, 
             failUrl: document.getElementById('failUrl').value,
-            comment: document.getElementById('comment').value
+            comment: document.getElementById('comment').value // описание товара
         };
 
         try {
@@ -76,20 +76,18 @@
 
         var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
 
-        const { amount, successUrl, failUrl } = getPaymentData();
-
         const {
-            orderId, comment
+            amount, orderId, comment
         } = getPaymentData();
 
         paymentPage.openPopup(amount, {
-            orderId, comment, successUrl
+            orderId, comment
         })
             .then(resolve => {
                 console.log(resolve, "closePopup");
             })
-            .catch(() => {
-                console.log("reject");
+            .catch((rej) => {
+                console.log(rej);
             });
     });
 
