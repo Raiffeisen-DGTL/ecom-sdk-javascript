@@ -6,7 +6,7 @@ import babel from 'rollup-plugin-babel';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
-import autoprefixer from 'autoprefixer'
+import autoprefixer from 'autoprefixer';
 import pkg from './package.json';
 
 const env = process.env.NODE_ENV;
@@ -45,7 +45,8 @@ const config = {
         ['@babel/proposal-object-rest-spread', { loose: true }],
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-transform-object-assign',
-        '@babel/plugin-proposal-private-methods'
+        '@babel/plugin-proposal-private-methods',
+          '@babel/plugin-transform-block-scoping'
       ].filter(Boolean),
       runtimeHelpers: true
     }),

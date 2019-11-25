@@ -38,7 +38,8 @@
             orderId: document.getElementById('orderId').value, // номер заказа
             successUrl: document.getElementById('successUrl').value, 
             failUrl: document.getElementById('failUrl').value,
-            comment: document.getElementById('comment').value // описание товара
+            comment: document.getElementById('comment').value, // описание товара
+            publicId: document.getElementById('publicId').value
         };
 
         try {
@@ -74,42 +75,42 @@
 
     document.getElementById('openPopup').addEventListener('click', function() {
 
-        var paymentPage = new PaymentPageSdk( document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
 
-        const {
-            amount, orderId, comment
-        } = getPaymentData();
+        var amount = getPaymentData().amount;
+        var orderId = getPaymentData().orderId;
+        var comment = getPaymentData().comment;
 
         paymentPage.openPopup(amount, {
-            orderId, comment
+            orderId: orderId, comment: comment
         })
-            .then(resolve => {
+            .then(function(resolve) {
                 console.log(resolve, "closePopup");
             })
-            .catch((rej) => {
+            .catch(function(rej) {
                 console.log(rej);
             });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
 
-        const {
-            amount, successUrl, failUrl
-        } = getPaymentData();
- 
-        paymentPage.replace({ amount, successUrl, failUrl });
+        var amount = getPaymentData().amount;
+        var successUrl = getPaymentData().successUrl;
+        var failUrl = getPaymentData().failUrl;
+
+        paymentPage.replace({ amount: amount, successUrl: successUrl, failUrl: failUrl });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(document.getElementById('publicId').value, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
 
-        const {
-            amount, successUrl, failUrl
-        } = getPaymentData();
+        var amount = getPaymentData().amount;
+        var successUrl = getPaymentData().successUrl;
+        var failUrl = getPaymentData().failUrl;
 
         paymentPage.openWindow({
-            amount, successUrl, failUrl
-        })        
+            amount: amount, successUrl: successUrl, failUrl: failUrl
+        });
     });
 })();

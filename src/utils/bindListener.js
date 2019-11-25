@@ -19,5 +19,5 @@ export const addMessageListener = (elem, mapping) => {
 };
 
 export const removeMessageListener = (elem, listener) => {
-    elem.removeEventListener(elem, listener);
+    elem.removeEventListener('message', listener);
 };

@@ -6,6 +6,7 @@ import { SUCCESS_RESULT, FAILED_RESULT } from 'src/constants/messages';
 import { addMessageListener, removeMessageListener } from 'src/utils/bindListener';
 import prepareUrl from 'src/utils/prepareUrl';
 import changeLocation from 'src/utils/changeLocation';
+import 'promise-polyfill/src/polyfill';
 import { disableScroll, enableScroll } from './utils/scroll';
 
 const prepareValue = value => {
@@ -30,15 +31,11 @@ class PaymentPageSdk {
 
         this.publicId = publicId;
         this.version = VERSION;
-        // this.successUrl = successUrl;
-        // this.failUrl = failUrl;
-
         this.url = prepareUrl(url);
     }
 
     closePopup = res => () => {
         console.log("CLOSEPOPUP");
-        // res(console.log("closePopupResolve"));
         res();
 
         if (
@@ -122,6 +119,8 @@ class PaymentPageSdk {
             window,
             { finish: this.handleFinishPayment(resolve, reject, successUrl, failUrl) }
         );
+
+        console.log(this.messageBinding);
 
         this.submitForm(this.paymentPage.name, paymentData);
 
