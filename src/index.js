@@ -34,10 +34,7 @@ class PaymentPageSdk {
         this.url = prepareUrl(url);
     }
 
-    closePopup = res => () => {
-        console.log("CLOSEPOPUP");
-        res();
-
+    closePopup = resolve => () => {
         if (
             (this.confirm && this.confirm.isMount())
             || !this.paymentPage
@@ -48,13 +45,12 @@ class PaymentPageSdk {
         this.confirm = new Confirm();
 
         this.mount.appendChild(this.confirm.execute({
-            onClose: this.forceClosePopup,
+            onClose: this.forceClosePopup(resolve),
             onCancel: () => this.confirm.unmount()
         }));
     };
 
-    forceClosePopup = () => {
-        console.log("FORCECLOSEPOPUP");
+    forceClosePopup = reject => () => {
         if (this.paymentPage) {
             this.paymentPage.unmount();
         }
@@ -67,6 +63,8 @@ class PaymentPageSdk {
         this.messageBinding = null;
 
         enableScroll();
+
+        typeof reject === 'function' && reject();
     };
 
     submitForm = (target = '_self', paymentData) => {
@@ -105,11 +103,8 @@ class PaymentPageSdk {
         this.paymentPage = new PaymentPage();
 
         this.mount.appendChild(this.paymentPage.execute({
-            onClose: this.closePopup(resolve),
-            onForceClose: this.forceClosePopup,
-            external: {
-                resolve
-            },
+            onClose: this.closePopup(() => reject({ isCrossClose: true })),
+            onForceClose: this.forceClosePopup(() => reject({ isCrossClose: true })),
             url: this.url
         }));
 
@@ -119,8 +114,6 @@ class PaymentPageSdk {
             window,
             { finish: this.handleFinishPayment(resolve, reject, successUrl, failUrl) }
         );
-
-        console.log(this.messageBinding);
 
         this.submitForm(this.paymentPage.name, paymentData);
 
@@ -163,7 +156,7 @@ class PaymentPageSdk {
         }
 
         if (content.result === FAILED_RESULT) {
-            rej("test");
+            rej({ isCrossClose: false });
 
             if (failUrl) {
                 changeLocation(failUrl);
@@ -172,7 +165,7 @@ class PaymentPageSdk {
             }
         }
 
-        this.forceClosePopup();
+        this.forceClosePopup()();
     }
 }
 

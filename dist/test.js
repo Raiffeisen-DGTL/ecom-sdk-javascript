@@ -75,39 +75,43 @@
 
     document.getElementById('openPopup').addEventListener('click', function() {
 
+        var paymentData = getPaymentData();
+
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
 
-        var amount = getPaymentData().amount;
-        var orderId = getPaymentData().orderId;
-        var comment = getPaymentData().comment;
+        var amount = paymentData.amount;
+        var orderId = paymentData.orderId;
+        var comment = paymentData.comment;
 
         paymentPage.openPopup(amount, {
             orderId: orderId, comment: comment
         })
-            .then(function(resolve) {
-                console.log(resolve, "closePopup");
+            .then(function(result) {
+                console.log('resolve', result);
             })
-            .catch(function(rej) {
-                console.log(rej);
+            .catch(function(result) {
+                console.log('reject', result);
             });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var paymentData = getPaymentData();
 
-        var amount = getPaymentData().amount;
-        var successUrl = getPaymentData().successUrl;
-        var failUrl = getPaymentData().failUrl;
+        var amount = paymentData.amount;
+        var successUrl = paymentData.successUrl;
+        var failUrl = paymentData.failUrl;
 
         paymentPage.replace({ amount: amount, successUrl: successUrl, failUrl: failUrl });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var paymentData = getPaymentData();
 
-        var amount = getPaymentData().amount;
-        var successUrl = getPaymentData().successUrl;
-        var failUrl = getPaymentData().failUrl;
+        var amount = paymentData.amount;
+        var successUrl = paymentData.successUrl;
+        var failUrl = paymentData.failUrl;
 
         paymentPage.openWindow({
             amount: amount, successUrl: successUrl, failUrl: failUrl

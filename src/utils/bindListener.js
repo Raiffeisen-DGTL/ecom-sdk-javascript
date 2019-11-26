@@ -1,3 +1,5 @@
+const POST_MESSAGE_EVENT_TYPE = 'message';
+
 export const addMessageListener = (elem, mapping) => {
     const listener = e => {
         if (!e || !e.data) {
@@ -13,11 +15,11 @@ export const addMessageListener = (elem, mapping) => {
         mapping[data.event](data.content);
     };
 
-    elem.addEventListener('message', listener, false);
+    elem.addEventListener(POST_MESSAGE_EVENT_TYPE, listener, false);
 
     return listener;
 };
 
 export const removeMessageListener = (elem, listener) => {
-    elem.removeEventListener('message', listener);
+    elem.removeEventListener(POST_MESSAGE_EVENT_TYPE, listener);
 };

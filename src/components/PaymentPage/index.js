@@ -7,10 +7,10 @@ import style from './style.css';
 export class PaymentPage extends Component {
     name = 'payment-page';
 
-    handleClickCross = (event) => {
-        event.stopPropagation();
+    handleClickCross = e => {
+        e.stopPropagation();
 
-        const {onForceClose} = this.props;
+        const { onForceClose } = this.props;
 
         onForceClose();
     }

@@ -46,7 +46,6 @@ const config = {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-transform-object-assign',
         '@babel/plugin-proposal-private-methods',
-          '@babel/plugin-transform-block-scoping'
       ].filter(Boolean),
       runtimeHelpers: true
     }),

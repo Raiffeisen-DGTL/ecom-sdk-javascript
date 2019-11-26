@@ -60,8 +60,5 @@
     "rollup-plugin-terser": "^5.0.0"
   },
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "bluebird": "^3.7.1"
-  }
+  "license": "MIT"
 }
