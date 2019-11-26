@@ -22,16 +22,17 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(publicId, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
-        if (targetElem instanceof HTMLElement) {
-            this.mount = targetElem;
+    constructor(publicId, options = {}) {
+        if (options.targetElem instanceof HTMLElement) {
+            this.mount = options.targetElem;
         } else {
             this.mount = document.body;
         }
 
         this.publicId = publicId;
+        this.style = options.style;
         this.version = VERSION;
-        this.url = prepareUrl(url);
+        this.url = prepareUrl(options.url);
     }
 
     closePopup = resolve => () => {
@@ -90,14 +91,14 @@ class PaymentPageSdk {
         this.mount.removeChild(form);
     }
 
-    openPopup = (amount, props) => new Promise((resolve, reject) => {
+    openPopup = (amount, props = {}) => new Promise((resolve, reject) => {
         if (this.paymentPage && this.paymentPage.isMount() && this.messageBinding) {
             return;
         }
 
-        const { publicId, version } = this;
+        const { publicId, style, version } = this;
         const paymentData = {
-            ...props, publicId, version, amount, successUrl: '#', failUrl: '#'
+            ...props, publicId, style, version, amount, successUrl: '#', failUrl: '#'
         };
 
         this.paymentPage = new PaymentPage();
