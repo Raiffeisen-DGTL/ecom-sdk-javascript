@@ -29,17 +29,17 @@
     document.getElementById('orderId').value = Math.floor(Math.random() * 99999).toString().substr(0, 5);
 
     var getPaymentData = function () {
-        var extraString = document.getElementById('extra').value;
-        var receiptString = document.getElementById('receipt').value;
-        var styleString = document.getElementById('style').value;
+        var extraString = document.getElementById('extra').value; // параметры, которые придут пользователю (любые данные)
+        var receiptString = document.getElementById('receipt').value; // нужен для того, чтобы зарегистрировать чек
+        var styleString = document.getElementById('style').value; // мерч может сам настроить стилизацию
 
         var result = {
-            amount: document.getElementById('amount').value,
-            orderId: document.getElementById('orderId').value,
-            successUrl: document.getElementById('successUrl').value,
+            amount: document.getElementById('amount').value, // цена
+            orderId: document.getElementById('orderId').value, // номер заказа
+            successUrl: document.getElementById('successUrl').value, 
             failUrl: document.getElementById('failUrl').value,
-            publicId: document.getElementById('publicId').value,
-            comment: document.getElementById('comment').value
+            comment: document.getElementById('comment').value, // описание товара
+            publicId: document.getElementById('publicId').value
         };
 
         try {
@@ -74,20 +74,47 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
 
-        paymentPage.openPopup();
+        var paymentData = getPaymentData();
+
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+
+        var amount = paymentData.amount;
+        var orderId = paymentData.orderId;
+        var comment = paymentData.comment;
+
+        paymentPage.openPopup(amount, {
+            orderId: orderId, comment: comment
+        })
+            .then(function(result) {
+                console.log('resolve', result);
+            })
+            .catch(function(result) {
+                console.log('reject', result);
+            });
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var paymentData = getPaymentData();
 
-        paymentPage.open();
+        var amount = paymentData.amount;
+        var successUrl = paymentData.successUrl;
+        var failUrl = paymentData.failUrl;
+
+        paymentPage.replace({ amount: amount, successUrl: successUrl, failUrl: failUrl });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData(), null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var paymentData = getPaymentData();
 
-        paymentPage.open(true);
+        var amount = paymentData.amount;
+        var successUrl = paymentData.successUrl;
+        var failUrl = paymentData.failUrl;
+
+        paymentPage.openWindow({
+            amount: amount, successUrl: successUrl, failUrl: failUrl
+        });
     });
 })();

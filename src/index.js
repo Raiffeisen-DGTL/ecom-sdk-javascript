@@ -6,6 +6,7 @@ import { SUCCESS_RESULT, FAILED_RESULT } from 'src/constants/messages';
 import { addMessageListener, removeMessageListener } from 'src/utils/bindListener';
 import prepareUrl from 'src/utils/prepareUrl';
 import changeLocation from 'src/utils/changeLocation';
+import 'promise-polyfill/src/polyfill';
 import { disableScroll, enableScroll } from './utils/scroll';
 
 const prepareValue = value => {
@@ -21,42 +22,19 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(paymentData = {}, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
+    constructor(publicId, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
         if (targetElem instanceof HTMLElement) {
             this.mount = targetElem;
         } else {
             this.mount = document.body;
         }
 
-        this.paymentData = { ...paymentData, version: VERSION };
+        this.publicId = publicId;
+        this.version = VERSION;
         this.url = prepareUrl(url);
-
-        this.messageBinding = addMessageListener(
-            window,
-            { finish: this.handleFinishPayment }
-        );
     }
 
-    openPopup = () => {
-        if (this.paymentPage && this.paymentPage.isMount()) {
-            return;
-        }
-
-        this.paymentPage = new PaymentPage();
-
-        this.mount.appendChild(this.paymentPage.execute({
-            paymentData: this.paymentData,
-            onClose: this.closePopup,
-            onForceClose: this.forceClosePopup,
-            url: this.url
-        }));
-
-        this.submitForm(this.paymentPage.name);
-
-        disableScroll();
-    }
-
-    closePopup = () => {
+    closePopup = resolve => () => {
         if (
             (this.confirm && this.confirm.isMount())
             || !this.paymentPage
@@ -64,16 +42,15 @@ class PaymentPageSdk {
         ) {
             return;
         }
-
         this.confirm = new Confirm();
 
         this.mount.appendChild(this.confirm.execute({
-            onClose: this.forceClosePopup,
+            onClose: this.forceClosePopup(resolve),
             onCancel: () => this.confirm.unmount()
         }));
     };
 
-    forceClosePopup = () => {
+    forceClosePopup = reject => () => {
         if (this.paymentPage) {
             this.paymentPage.unmount();
         }
@@ -83,19 +60,22 @@ class PaymentPageSdk {
         }
 
         removeMessageListener(window, this.messageBinding);
+        this.messageBinding = null;
 
         enableScroll();
+
+        typeof reject === 'function' && reject();
     };
 
-    submitForm = (target = '_self') => {
+    submitForm = (target = '_self', paymentData) => {
         const form = document.createElement('form');
         form.setAttribute('action', this.url);
         form.setAttribute('method', 'POST');
         form.setAttribute('target', target);
 
-        Object.keys(this.paymentData).forEach(paymentDataKey => {
+        Object.keys(paymentData).forEach(paymentDataKey => {
             const input = document.createElement('input');
-            const value = prepareValue(this.paymentData[paymentDataKey]);
+            const value = prepareValue(paymentData[paymentDataKey]);
 
             input.setAttribute('value', value);
             input.setAttribute('name', paymentDataKey);
@@ -103,30 +83,89 @@ class PaymentPageSdk {
             form.appendChild(input);
         });
 
+
         this.mount.appendChild(form);
         form.submit();
 
         this.mount.removeChild(form);
     }
 
-    open = isTargetBlank => {
-        this.submitForm(isTargetBlank ? '_blank' : '_self');
+    openPopup = (amount, props) => new Promise((resolve, reject) => {
+        if (this.paymentPage && this.paymentPage.isMount() && this.messageBinding) {
+            return;
+        }
+
+        const { publicId, version } = this;
+        const paymentData = {
+            ...props, publicId, version, amount, successUrl: '#', failUrl: '#'
+        };
+
+        this.paymentPage = new PaymentPage();
+
+        this.mount.appendChild(this.paymentPage.execute({
+            onClose: this.closePopup(() => reject({ isCrossClose: true })),
+            onForceClose: this.forceClosePopup(() => reject({ isCrossClose: true })),
+            url: this.url
+        }));
+
+        const { successUrl, failUrl } = props;
+
+        this.messageBinding = addMessageListener(
+            window,
+            { finish: this.handleFinishPayment(resolve, reject, successUrl, failUrl) }
+        );
+
+        this.submitForm(this.paymentPage.name, paymentData);
+
+        disableScroll();
+    })
+
+    openWindow = props => {
+        const {
+            publicId, version
+        } = this;
+
+        const paymentData = {
+            publicId, version, ...props
+        };
+
+        this.submitForm('_blank', paymentData);
     }
 
-    handleFinishPayment = content => {
-        if (content.result === SUCCESS_RESULT && this.paymentData.successUrl) {
-            changeLocation(this.paymentData.successUrl);
+    replace = props => {
+        const {
+            publicId, version
+        } = this;
 
-            return;
+        const paymentData = {
+            publicId, version, ...props
+        };
+
+        this.submitForm('_self', paymentData);
+    }
+
+    handleFinishPayment = (res, rej, successUrl, failUrl) => content => {
+        if (content.result === SUCCESS_RESULT) {
+            res();
+
+            if (successUrl) {
+                changeLocation(successUrl);
+
+                return;
+            }
         }
 
-        if (content.result === FAILED_RESULT && this.paymentData.failUrl) {
-            changeLocation(this.paymentData.failUrl);
+        if (content.result === FAILED_RESULT) {
+            rej({ isCrossClose: false });
 
-            return;
+            if (failUrl) {
+                changeLocation(failUrl);
+
+                return;
+            }
         }
 
-        this.forceClosePopup();
+        this.forceClosePopup()();
     }
 }
 

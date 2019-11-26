@@ -7,8 +7,16 @@ import style from './style.css';
 export class PaymentPage extends Component {
     name = 'payment-page';
 
+    handleClickCross = e => {
+        e.stopPropagation();
+
+        const { onForceClose } = this.props;
+
+        onForceClose();
+    }
+
     render() {
-        const { onClose, onForceClose } = this.props;
+        const { onClose } = this.props;
         const paranja = new Paranja();
 
         const cover = document.createElement('div');
@@ -16,7 +24,7 @@ export class PaymentPage extends Component {
 
         const cross = document.createElement('div');
         addClass(cross, style.cross);
-        cross.addEventListener('click', onForceClose);
+        cross.addEventListener('click', this.handleClickCross);
         cross.innerText = '\u2715';
 
         const wrap = document.createElement('div');

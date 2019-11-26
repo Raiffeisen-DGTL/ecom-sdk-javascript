@@ -7,11 +7,15 @@ export default TargetClass => {
         }
 
         openPopup(...args) {
-            instance.openPopup(...args);
+            return instance.openPopup(...args);
         }
 
-        open(...args) {
-            instance.open(...args);
+        openWindow(...args) {
+            return instance.openWindow(...args);
+        }
+
+        replace(...args) {
+            return instance.replace(...args);
         }
     };
 };
