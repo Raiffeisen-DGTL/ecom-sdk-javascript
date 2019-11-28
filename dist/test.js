@@ -97,8 +97,10 @@
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
+        var style = document.getElementById('style').value;
+
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            targetElem: null, url: getTarget()
+            style, targetElem: null, url: getTarget()
         });
         var paymentData = getPaymentData();
 
@@ -110,8 +112,10 @@
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
+        var style = document.getElementById('style').value;
+        
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            targetElem: null, url: getTarget()
+            style, targetElem: null, url: getTarget()
         });
         var paymentData = getPaymentData();
 
