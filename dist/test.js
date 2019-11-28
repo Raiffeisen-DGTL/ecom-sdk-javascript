@@ -85,8 +85,8 @@
         var orderId = paymentData.orderId;
         var comment = paymentData.comment;
 
-        paymentPage.openPopup(amount, {
-            orderId: orderId, comment: comment
+        paymentPage.openPopup({
+            amount: amount, orderId: orderId, comment: comment
         })
             .then(function(result) {
                 console.log('resolve', result);
@@ -113,7 +113,7 @@
 
     document.getElementById('openBlank').addEventListener('click', function() {
         var style = document.getElementById('style').value;
-        
+
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
             style, targetElem: null, url: getTarget()
         });

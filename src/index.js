@@ -90,14 +90,14 @@ class PaymentPageSdk {
         this.mount.removeChild(form);
     }
 
-    openPopup = (amount, props = {}) => new Promise((resolve, reject) => {
+    openPopup = (props = {}) => new Promise((resolve, reject) => {
         if (this.paymentPage && this.paymentPage.isMount() && this.messageBinding) {
             return;
         }
 
         const { publicId, style, version } = this;
         const paymentData = {
-            ...props, publicId, style, version, amount, successUrl: '#', failUrl: '#'
+            ...props, publicId, style, version, successUrl: '#', failUrl: '#'
         };
 
         this.paymentPage = new PaymentPage();
@@ -120,7 +120,7 @@ class PaymentPageSdk {
         disableScroll();
     })
 
-    openWindow = props => {
+    openWindow = (props = {}) => {
         const {
             publicId, style, version
         } = this;
@@ -132,7 +132,7 @@ class PaymentPageSdk {
         this.submitForm('_blank', paymentData);
     }
 
-    replace = props => {
+    replace = (props = {}) => {
         const {
             publicId, style, version
         } = this;
