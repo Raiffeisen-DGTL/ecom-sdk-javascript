@@ -31,6 +31,9 @@ build*
 *.tar.gz
 
 node_modules
+!/dist/test.html
+!/dist/test.js
+dist
 lib
 lib-style
 coverage
