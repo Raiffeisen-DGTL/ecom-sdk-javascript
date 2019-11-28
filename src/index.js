@@ -22,16 +22,17 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(publicId, targetElem, url = 'https://e-commerce.raiffeisen.ru/pay') {
-        if (targetElem instanceof HTMLElement) {
-            this.mount = targetElem;
+    constructor(publicId, options = {}) {
+        if (options.targetElem instanceof HTMLElement) {
+            this.mount = options.targetElem;
         } else {
             this.mount = document.body;
         }
 
         this.publicId = publicId;
+        this.style = options.style;
         this.version = VERSION;
-        this.url = prepareUrl(url);
+        this.url = prepareUrl(options.url || 'https://e-commerce.raiffeisen.ru/pay');
     }
 
     closePopup = resolve => () => {
@@ -83,21 +84,20 @@ class PaymentPageSdk {
             form.appendChild(input);
         });
 
-
         this.mount.appendChild(form);
         form.submit();
 
         this.mount.removeChild(form);
     }
 
-    openPopup = (amount, props) => new Promise((resolve, reject) => {
+    openPopup = (props = {}) => new Promise((resolve, reject) => {
         if (this.paymentPage && this.paymentPage.isMount() && this.messageBinding) {
             return;
         }
 
-        const { publicId, version } = this;
+        const { publicId, style, version } = this;
         const paymentData = {
-            ...props, publicId, version, amount, successUrl: '#', failUrl: '#'
+            ...props, publicId, style, version, successUrl: '#', failUrl: '#'
         };
 
         this.paymentPage = new PaymentPage();
@@ -120,25 +120,25 @@ class PaymentPageSdk {
         disableScroll();
     })
 
-    openWindow = props => {
+    openWindow = (props = {}) => {
         const {
-            publicId, version
+            publicId, style, version
         } = this;
 
         const paymentData = {
-            publicId, version, ...props
+            ...props, publicId, style, version
         };
 
         this.submitForm('_blank', paymentData);
     }
 
-    replace = props => {
+    replace = (props = {}) => {
         const {
-            publicId, version
+            publicId, style, version
         } = this;
 
         const paymentData = {
-            publicId, version, ...props
+            ...props, publicId, style, version
         };
 
         this.submitForm('_self', paymentData);

@@ -33,7 +33,7 @@ build*
 node_modules
 !/dist/test.html
 !/dist/test.js
-/dist
+dist
 lib
 lib-style
 coverage

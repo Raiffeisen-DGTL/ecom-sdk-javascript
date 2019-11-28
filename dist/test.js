@@ -36,7 +36,7 @@
         var result = {
             amount: document.getElementById('amount').value, // цена
             orderId: document.getElementById('orderId').value, // номер заказа
-            successUrl: document.getElementById('successUrl').value, 
+            successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value
@@ -74,17 +74,19 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-
+        var style = document.getElementById('style').value;
         var paymentData = getPaymentData();
 
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
+            style, targetElem: null, url: getTarget()
+        });
 
         var amount = paymentData.amount;
         var orderId = paymentData.orderId;
         var comment = paymentData.comment;
 
-        paymentPage.openPopup(amount, {
-            orderId: orderId, comment: comment
+        paymentPage.openPopup({
+            amount: amount, orderId: orderId, comment: comment
         })
             .then(function(result) {
                 console.log('resolve', result);
@@ -95,7 +97,11 @@
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var style = document.getElementById('style').value;
+
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
+            style, targetElem: null, url: getTarget()
+        });
         var paymentData = getPaymentData();
 
         var amount = paymentData.amount;
@@ -106,7 +112,11 @@
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, null, getTarget());
+        var style = document.getElementById('style').value;
+
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
+            style, targetElem: null, url: getTarget()
+        });
         var paymentData = getPaymentData();
 
         var amount = paymentData.amount;
