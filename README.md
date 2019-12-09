@@ -27,7 +27,7 @@ JS библиотека для работы с [формой оплаты Рай
 Для рабочего проекта подключите скрипт:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/payment.styled.min.js"></script>
+<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.min.js"></script>
 ```
 
 или
@@ -197,7 +197,7 @@ paymentPage.openWindow({
 Не минифицированный скрипт со стилями внутри:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/payment.styled.js"></script>
+<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.js"></script>
 ```
 
 ### Раздельное подключение стилей отдельным файлом
@@ -207,13 +207,13 @@ paymentPage.openWindow({
 Подключение стилей:
 
 ```
-<link rel="stylesheet" href="https://e-commerce.raiffeisen.ru/pay/sdk/payment.min.css">
+<link rel="stylesheet" href="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.css">
 ```
  
 Подключение библиотеки:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/payment.min.js"></script>
+<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.js"></script>
 ```
 
 #### Подключение модуля
