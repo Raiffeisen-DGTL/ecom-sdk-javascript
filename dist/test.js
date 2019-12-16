@@ -74,11 +74,10 @@
     }
 
     document.getElementById('openPopup').addEventListener('click', function() {
-        var style = document.getElementById('style').value;
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style, targetElem: null, url: getTarget()
+            style: paymentData.style, targetElem: null, url: getTarget()
         });
 
         var amount = paymentData.amount;
@@ -97,34 +96,35 @@
     });
 
     document.getElementById('openSelf').addEventListener('click', function() {
-        var style = document.getElementById('style').value;
-
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style, targetElem: null, url: getTarget()
-        });
         var paymentData = getPaymentData();
 
-        var amount = paymentData.amount;
-        var successUrl = paymentData.successUrl;
-        var failUrl = paymentData.failUrl;
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
+            style: paymentData.style, targetElem: null, url: getTarget()
+        });
 
-        paymentPage.replace({ amount: amount, successUrl: successUrl, failUrl: failUrl });
+        paymentPage.replace({
+            amount: paymentData.amount,
+            orderId: paymentData.orderId,
+            successUrl: paymentData.successUrl,
+            failUrl: paymentData.successUrl,
+            comment: paymentData.comment
+        });
     });
 
     document.getElementById('openBlank').addEventListener('click', function() {
-        var style = document.getElementById('style').value;
-
-        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style, targetElem: null, url: getTarget()
-        });
         var paymentData = getPaymentData();
 
-        var amount = paymentData.amount;
-        var successUrl = paymentData.successUrl;
-        var failUrl = paymentData.failUrl;
+        var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
+            style: paymentData.style, url: getTarget()
+        });
+        
 
         paymentPage.openWindow({
-            amount: amount, successUrl: successUrl, failUrl: failUrl
+            amount: paymentData.amount,
+            orderId: paymentData.orderId,
+            successUrl: paymentData.successUrl,
+            failUrl: paymentData.successUrl,
+            comment: paymentData.comment
         });
     });
 })();
