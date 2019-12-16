@@ -2,6 +2,7 @@ import { PaymentPage } from 'src/components/PaymentPage';
 import { Confirm } from 'src/components/Confirm';
 import classProvider from 'src/utils/classProvider';
 import { VERSION } from 'src/constants/version';
+import { POPUP_POSTFIX } from 'src/constants';
 import { SUCCESS_RESULT, FAILED_RESULT } from 'src/constants/messages';
 import { addMessageListener, removeMessageListener } from 'src/utils/bindListener';
 import prepareUrl from 'src/utils/prepareUrl';
@@ -65,12 +66,14 @@ class PaymentPageSdk {
 
         enableScroll();
 
-        typeof reject === 'function' && reject();
+        if (typeof reject === 'function') {
+            reject();
+        }
     };
 
-    submitForm = (target = '_self', paymentData) => {
+    submitForm = (target = '_self', paymentData, url = this.url) => {
         const form = document.createElement('form');
-        form.setAttribute('action', this.url);
+        form.setAttribute('action', url);
         form.setAttribute('method', 'POST');
         form.setAttribute('target', target);
 
@@ -115,7 +118,7 @@ class PaymentPageSdk {
             { finish: this.handleFinishPayment(resolve, reject, successUrl, failUrl) }
         );
 
-        this.submitForm(this.paymentPage.name, paymentData);
+        this.submitForm(this.paymentPage.name, paymentData, this.url + POPUP_POSTFIX);
 
         disableScroll();
     })
@@ -129,7 +132,7 @@ class PaymentPageSdk {
             ...props, publicId, style, version
         };
 
-        this.submitForm('_blank', paymentData);
+        this.submitForm('_blank', paymentData, this.url);
     }
 
     replace = (props = {}) => {
@@ -141,7 +144,7 @@ class PaymentPageSdk {
             ...props, publicId, style, version
         };
 
-        this.submitForm('_self', paymentData);
+        this.submitForm('_self', paymentData, this.url);
     }
 
     handleFinishPayment = (res, rej, successUrl, failUrl) => content => {
