@@ -11,8 +11,8 @@
     "build:commonjs": "cross-env STYLE_EXTRACT=true FORMAT=cjs NODE_ENV=production BABEL_ENV=commonjs rollup -c -o lib-style/index.js",
     "build:styled:commonjs": "cross-env BABEL_ENV=commonjs FORMAT=cjs NODE_ENV=production rollup -c -o lib/index.js",
     "build:iife": "cross-env NODE_ENV=development rollup -c -o dist/payment.styled.js",
-    "build:iife:styled:min": "cross-env STYLE_EXTRACT=false NODE_ENV=production rollup -c -o dist/payment.styled.min.js",
-    "build:iife:min": "cross-env STYLE_EXTRACT=true STYLE_EXTRACT=true NODE_ENV=production rollup -c -o dist/payment.min.js"
+    "build:iife:styled:min": "cross-env NODE_ENV=production rollup -c -o dist/payment.styled.min.js",
+    "build:iife:min": "cross-env STYLE_EXTRACT=true NODE_ENV=production rollup -c -o dist/payment.min.js"
   },
   "files": [
     "lib",
