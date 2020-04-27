@@ -106,7 +106,7 @@
             amount: paymentData.amount,
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
-            failUrl: paymentData.successUrl,
+            failUrl: paymentData.failUrl,
             comment: paymentData.comment
         });
     });
@@ -117,13 +117,12 @@
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
             style: paymentData.style, url: getTarget()
         });
-        
 
         paymentPage.openWindow({
             amount: paymentData.amount,
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
-            failUrl: paymentData.successUrl,
+            failUrl: paymentData.failUrl,
             comment: paymentData.comment
         });
     });
