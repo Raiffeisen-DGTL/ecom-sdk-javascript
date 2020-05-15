@@ -39,7 +39,7 @@
             successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
             comment: document.getElementById('comment').value, // описание товара
-            publicId: document.getElementById('publicId').value
+            publicId: document.getElementById('publicId').value,
         };
 
         try {
@@ -70,14 +70,14 @@
     };
 
     var getTarget = function() {
-        return document.getElementById('target').value
-    }
+        return document.getElementById('target').value;
+    };
 
     document.getElementById('openPopup').addEventListener('click', function() {
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, targetElem: null, url: getTarget()
+            style: paymentData.style, extra: paymentData.extra, targetElem: null, url: getTarget()
         });
 
         var amount = paymentData.amount;

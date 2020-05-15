@@ -32,6 +32,7 @@ class PaymentPageSdk {
 
         this.publicId = publicId;
         this.style = options.style;
+        this.extra = options.extra;
         this.version = VERSION;
         this.url = prepareUrl(options.url || 'https://e-commerce.raiffeisen.ru/pay');
     }
@@ -98,9 +99,9 @@ class PaymentPageSdk {
             return;
         }
 
-        const { publicId, style, version } = this;
+        const { publicId, style, version, extra } = this;
         const paymentData = {
-            ...props, publicId, style, version, successUrl: '#', failUrl: '#'
+            ...props, publicId, style, extra, version, successUrl: '#', failUrl: '#'
         };
 
         this.paymentPage = new PaymentPage();
@@ -125,11 +126,11 @@ class PaymentPageSdk {
 
     openWindow = (props = {}) => {
         const {
-            publicId, style, version
+            publicId, style, version, extra
         } = this;
 
         const paymentData = {
-            ...props, publicId, style, version
+            ...props, publicId, style, version, extra
         };
 
         this.submitForm('_blank', paymentData, this.url);
@@ -137,11 +138,11 @@ class PaymentPageSdk {
 
     replace = (props = {}) => {
         const {
-            publicId, style, version
+            publicId, style, version, extra
         } = this;
 
         const paymentData = {
-            ...props, publicId, style, version
+            ...props, publicId, style, version, extra
         };
 
         this.submitForm('_self', paymentData, this.url);
