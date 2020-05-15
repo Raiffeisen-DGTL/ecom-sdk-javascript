@@ -140,7 +140,6 @@ class PaymentPageSdk {
         const {
             publicId, style, version, extra
         } = this;
-
         const paymentData = {
             ...props, publicId, style, version, extra
         };

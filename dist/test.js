@@ -99,7 +99,7 @@
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, targetElem: null, url: getTarget()
+            style: paymentData.style, extra: paymentData.extra, targetElem: null, url: getTarget()
         });
 
         paymentPage.replace({
@@ -115,7 +115,7 @@
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, url: getTarget()
+            style: paymentData.style, extra: paymentData.extra, url: getTarget()
         });
 
         paymentPage.openWindow({
