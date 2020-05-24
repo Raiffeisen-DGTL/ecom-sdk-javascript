@@ -31,8 +31,6 @@ class PaymentPageSdk {
         }
 
         this.publicId = publicId;
-        this.style = options.style;
-        this.extra = options.extra;
         this.version = VERSION;
         this.url = prepareUrl(options.url || 'https://e-commerce.raiffeisen.ru/pay');
     }
@@ -99,7 +97,9 @@ class PaymentPageSdk {
             return;
         }
 
-        const { publicId, style, version, extra } = this;
+        const { publicId, version } = this;
+        const { style, extra } = props;
+
         const paymentData = {
             ...props, publicId, style, extra, version, successUrl: '#', failUrl: '#'
         };
@@ -125,9 +125,8 @@ class PaymentPageSdk {
     })
 
     openWindow = (props = {}) => {
-        const {
-            publicId, style, version, extra
-        } = this;
+        const { publicId, version } = this;
+        const { style, extra } = props;
 
         const paymentData = {
             ...props, publicId, style, version, extra
@@ -137,9 +136,9 @@ class PaymentPageSdk {
     }
 
     replace = (props = {}) => {
-        const {
-            publicId, style, version, extra
-        } = this;
+        const { publicId, version } = this;
+        const { style, extra } = props;
+
         const paymentData = {
             ...props, publicId, style, version, extra
         };

@@ -77,15 +77,21 @@
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, extra: paymentData.extra, targetElem: null, url: getTarget()
+            targetElem: null, url: getTarget()
         });
 
         var amount = paymentData.amount;
         var orderId = paymentData.orderId;
         var comment = paymentData.comment;
+        var extra = paymentData.extra;
+        var style = paymentData.style;
 
         paymentPage.openPopup({
-            amount: amount, orderId: orderId, comment: comment
+            amount,
+            orderId,
+            comment,
+            extra,
+            style,
         })
             .then(function(result) {
                 console.log('resolve', result);
@@ -99,7 +105,7 @@
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, extra: paymentData.extra, targetElem: null, url: getTarget()
+            targetElem: null, url: getTarget()
         });
 
         paymentPage.replace({
@@ -107,7 +113,9 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
-            comment: paymentData.comment
+            comment: paymentData.comment,
+            extra: paymentData.extra,
+            style: paymentData.style,
         });
     });
 
@@ -115,7 +123,7 @@
         var paymentData = getPaymentData();
 
         var paymentPage = new PaymentPageSdk(getPaymentData().publicId, {
-            style: paymentData.style, extra: paymentData.extra, url: getTarget()
+            url: getTarget()
         });
 
         paymentPage.openWindow({
@@ -123,7 +131,9 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
-            comment: paymentData.comment
+            comment: paymentData.comment,
+            extra: paymentData.extra,
+            style: paymentData.style,
         });
     });
 })();
