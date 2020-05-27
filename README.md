@@ -94,8 +94,8 @@ paymentPage.replace({amount: 10.10});
 
 Необязательные параметры:
 
-* orderId (String) - номер заказа;
-* extra (String) - любые данные, которые можно получить при вызове колбэка;
+* orderId (String) - номер заказа (в строке разрешены символы английского алфавита, а также два специальных символа: "-", "_" ([0-9a-zA-Zа-яА-Я\-\_]+));
+* extra (Object) - любые данные, которые можно получить при вызове колбэка;
 * successUrl (String) - ссылка, на которую перейдёт покупатель, в случае успешной оплаты. 
 Поддерживается только для openWindow или replace; 
 * failUrl (String) - ссылка, на которую перейдёт покупатель, в случае неудачной оплаты.
@@ -128,7 +128,9 @@ const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
 paymentPage.openPopup({
                         amount: 10.10,
                         orderId: '91700',
-                        extra: 'test@test.ru',                      
+                        extra: {
+                            url: 'https://e-commerce.raiffeisen.ru/pay'
+                        },                      
                         style: {
                             button: {
                                 backgroundColor: '#ffc800',
@@ -165,7 +167,9 @@ const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
 paymentPage.openWindow({
                         amount: 10.10,
                         orderId: '91700',
-                        extra: 'test@test.ru',                      
+                        extra: {
+                            url: 'https://e-commerce.raiffeisen.ru/pay'
+                        },                    
                         style: {
                             button: {
                                 backgroundColor: '#ffc800',
