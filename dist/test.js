@@ -80,18 +80,12 @@
             targetElem: null, url: getTarget()
         });
 
-        var amount = paymentData.amount;
-        var orderId = paymentData.orderId;
-        var comment = paymentData.comment;
-        var extra = paymentData.extra;
-        var style = paymentData.style;
-
         paymentPage.openPopup({
-            amount,
-            orderId,
-            comment,
-            extra,
-            style,
+            amount: paymentData.amount,
+            orderId: paymentData.orderId,
+            comment: paymentData.comment,
+            extra: paymentData.extra,
+            style: paymentData.style,
         })
             .then(function(result) {
                 console.log('resolve', result);
