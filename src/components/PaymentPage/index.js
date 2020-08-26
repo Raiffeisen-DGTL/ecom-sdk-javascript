@@ -33,9 +33,6 @@ export class PaymentPage extends Component {
         const inner = document.createElement('div');
         addClass(inner, style.inner);
 
-        const crossWrap = document.createElement('div');
-        addClass(crossWrap, style['cross-wrap']);
-
         const iframe = document.createElement('iframe');
         iframe.setAttribute('name', this.name);
         addClass(iframe, style.iframe);
@@ -44,10 +41,9 @@ export class PaymentPage extends Component {
         addClass(iframeWrap, style['iframe-wrap']);
 
         cover.appendChild(wrap);
-        wrap.appendChild(crossWrap);
+        cover.appendChild(cross);
         wrap.appendChild(iframeWrap);
         iframeWrap.appendChild(iframe);
-        crossWrap.appendChild(cross);
 
         return paranja.execute({
             children: cover,

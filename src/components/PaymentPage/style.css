@@ -11,30 +11,23 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 480px;
+    width: 654px;
     max-width: 100%;
     height: 637px;
     max-height: 100%;
-    background-color: white;
     display: flex;
     flex-direction: column;
 }
 
-.cross-wrap {
-    height: 48px;
-    position: relative;
-}
-
 .cross {
     right: 17px;
-    top: 50%;
-    color: rgb(102, 102, 102);
-    position: absolute;
-    font-size: 1.5rem;
+    top: 17px;
+    color: #fff;
+    position: fixed;
+    font-size: 2rem;
     cursor: pointer;
     font-family: "Arial", sans-serif;
     z-index: 101;
-    transform: translate(0, -50%);
 }
 
 .iframe {
@@ -55,5 +48,13 @@
     .inner {
         -webkit-overflow-scrolling: touch;
         overflow: auto;
+    }
+
+    .cross {
+        top: 24px;
+        color: rgb(102, 102, 102);
+        position: absolute;
+        font-size: 1.5rem;
+        transform: translate(0, -50%);
     }
 }
