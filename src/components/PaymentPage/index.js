@@ -3,6 +3,7 @@ import Component from 'src/utils/component';
 import { Paranja } from 'src/components/Paranja';
 import { addClass } from 'src/utils/classList';
 import style from './style.css';
+import { VERSION } from '../../constants/version';
 
 export class PaymentPage extends Component {
     name = 'payment-page';
@@ -33,21 +34,18 @@ export class PaymentPage extends Component {
         const inner = document.createElement('div');
         addClass(inner, style.inner);
 
-        const crossWrap = document.createElement('div');
-        addClass(crossWrap, style['cross-wrap']);
-
         const iframe = document.createElement('iframe');
         iframe.setAttribute('name', this.name);
+        iframe.setAttribute('data-sdk-version', VERSION);
         addClass(iframe, style.iframe);
 
         const iframeWrap = document.createElement('div');
         addClass(iframeWrap, style['iframe-wrap']);
 
         cover.appendChild(wrap);
-        wrap.appendChild(crossWrap);
+        cover.appendChild(cross);
         wrap.appendChild(iframeWrap);
         iframeWrap.appendChild(iframe);
-        crossWrap.appendChild(cross);
 
         return paranja.execute({
             children: cover,
