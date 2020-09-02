@@ -2,6 +2,7 @@ import Component from 'src/utils/component';
 
 import { Paranja } from 'src/components/Paranja';
 import { addClass } from 'src/utils/classList';
+import { CROSS } from 'src/constants/icons';
 import style from './style.css';
 
 export class PaymentPage extends Component {
@@ -23,9 +24,9 @@ export class PaymentPage extends Component {
         addClass(cover, style.cover);
 
         const cross = document.createElement('div');
+        cross.innerHTML = CROSS;
         addClass(cross, style.cross);
         cross.addEventListener('click', this.handleClickCross);
-        cross.innerText = '\u2715';
 
         const wrap = document.createElement('div');
         addClass(wrap, style.wrap);

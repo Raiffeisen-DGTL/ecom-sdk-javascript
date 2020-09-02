@@ -20,6 +20,8 @@
 }
 
 .cross {
+    width: 39px;
+    height: 39px;
     right: 17px;
     top: 17px;
     color: #fff;
@@ -28,6 +30,10 @@
     cursor: pointer;
     font-family: "Arial", sans-serif;
     z-index: 101;
+}
+
+.cross svg:hover {
+    fill: #AAABAD;
 }
 
 .iframe {
