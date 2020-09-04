@@ -38,3 +38,4 @@ lib
 lib-style
 coverage
 es
+package-lock.json
