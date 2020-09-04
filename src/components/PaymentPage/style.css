@@ -55,10 +55,21 @@
     }
 
     .cross {
-        top: 24px;
+        right: 16px;
+        top: 22px;
         color: rgb(102, 102, 102);
         position: absolute;
         font-size: 1.5rem;
         transform: translate(0, -50%);
+    }
+
+    .cross svg {
+        fill: #2B2D33;
+        width: 16px;
+        height: 16px;
+    }
+
+    .cross:hover svg {
+        fill: #AAABAD;
     }
 }
