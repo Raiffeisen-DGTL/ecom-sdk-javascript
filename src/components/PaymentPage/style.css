@@ -43,6 +43,7 @@
 
 .iframe-wrap {
     flex: 1;
+    overflow-y: hidden;
 }
 
 @media (max-width: 450px) {
