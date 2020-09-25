@@ -48,14 +48,14 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 и необязательный, в случае, если нужно выбрать определенный сервер для работы
 (test/production) - `url`
 
-####test
+###test
 ```js
     const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
         url: 'https://test.ecom.raiffeisen.ru/pay'
     });
 ```
 
-####prod
+###prod
 ```js
     const paymentPage = new PaymentPageSdk('000001780049001-80049001', {
         url: 'https://e-commerce.raiffeisen.ru/pay'
