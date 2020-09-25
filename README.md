@@ -56,16 +56,9 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 ```
 
 `prod`
-```js
-    const paymentPage = new PaymentPageSdk('000001780049001-80049001', {
-        url: 'https://e-commerce.raiffeisen.ru/pay'
-    });
-```
-
-или
 
 ```js
-    const paymentPage = new PaymentPageSdk('000001780049001-80049001'); // по умолчанию prod
+    const paymentPage = new PaymentPageSdk('000001780049001-80049001');
 ```
 
 
