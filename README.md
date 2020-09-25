@@ -42,7 +42,25 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 
 ## `Использование библиотеки`
 
-Работа происходит через обращения к классу `PaymentPageSdk`
+Работа происходит через обращения к классу `PaymentPageSdk`.
+
+В параметрах конструктора нужно указать обязательный параметр `publicId`
+и необязательный, в случае, если нужно выбрать определенный сервер для работы
+(test/production) - `url`
+
+`test`
+```js
+    const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
+        url: 'https://test.ecom.raiffeisen.ru/pay'
+    });
+```
+
+`prod`
+
+```js
+    const paymentPage = new PaymentPageSdk('000001780049001-80049001');
+```
+
 
 ### `Простые сценарии`
 
@@ -56,9 +74,7 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 Для отслеживания успешности оплаты метод openPopup возвращает Promise, 
 позволяющий подписаться на успешную оплату или закрытие окна.
 
-```
-const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
-
+```js
 paymentPage.openPopup({amount: 10.10})
         .then(function(resolve) {
                         //console.log(resolve, "Спасибо");
@@ -66,22 +82,17 @@ paymentPage.openPopup({amount: 10.10})
         .catch(function() {
                         //console.log("Неудача");
                     });
-);
 ```
 
 #### Форма оплаты в новой вкладке
  
-```
-const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
-
+```js
 paymentPage.openWindow({amount: 10.10});
 ```
 
 #### Форма оплаты в той же вкладке
 
-```
-const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
-
+```js
 paymentPage.replace({amount: 10.10});
 ```
 
@@ -123,8 +134,6 @@ paymentPage.replace({amount: 10.10});
 #### Пример открытия во всплывающем окне с необязательными параметрами
 
 ```
-const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
- 
 paymentPage.openPopup({
                         amount: 10.10,
                         orderId: '91700',
@@ -162,8 +171,6 @@ paymentPage.openPopup({
 
 
 ```
-const paymentPage = new PaymentPageSdk('000001680211111-80211111'); //publicId
-
 paymentPage.openWindow({
                         amount: 10.10,
                         orderId: '91700',
