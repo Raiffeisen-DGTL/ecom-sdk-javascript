@@ -106,11 +106,11 @@ paymentPage.replace({amount: 10.10});
 Необязательные параметры:
 
 * orderId (String) - номер заказа (в строке разрешены символы английского алфавита, цифры, а также два специальных символа: "-", "_" ([0-9a-zA-Z\-\_]+));
-* extra (Object) - любые данные, которые можно получить при вызове колбэка;
 * successUrl (String) - ссылка, на которую перейдёт покупатель, в случае успешной оплаты. 
 Поддерживается только для openWindow или replace; 
 * failUrl (String) - ссылка, на которую перейдёт покупатель, в случае неудачной оплаты.
 Поддерживается только для openWindow или replace;
+* extra (Object) - любые данные, которые можно получить при вызове колбэка;
 * comment (String) - описание товара, который приобретает покупатель.
 
 Дополнительно можно стилизовать страницу, это достигается путём добавления параметра `style`:
@@ -138,7 +138,9 @@ paymentPage.openPopup({
                         amount: 10.10,
                         orderId: '91700',
                         extra: {
-                            url: 'https://e-commerce.raiffeisen.ru/pay'
+                            email: 'test@test.ru',
+                            login: 'testLogin',
+                            phone: '79191234567'
                         },                      
                         style: {
                             button: {
@@ -169,14 +171,17 @@ paymentPage.openPopup({
 В openWindow передаются необязательные параметры для возврата пользователя на страницу,
 в зависимости от результата оплаты: successUrl и failUrl.
 
-
 ```
 paymentPage.openWindow({
                         amount: 10.10,
                         orderId: '91700',
+                        successUrl: 'https://www.raiffeisen.ru',
+                        failUrl: 'https://e-commerce.raiffeisen.ru/pay/demo.html',
                         extra: {
-                            url: 'https://e-commerce.raiffeisen.ru/pay'
-                        },                    
+                            email: 'test@test.ru',
+                            login: 'testLogin',
+                            phone: '79191234567'
+                        },
                         style: {
                             button: {
                                 backgroundColor: '#ffc800',
@@ -190,8 +195,6 @@ paymentPage.openWindow({
                                 titlePlace: 'right'
                             }                    
                         },
-                        successUrl: 'https://www.raiffeisen.ru',
-                        failUrl: 'https://e-commerce.raiffeisen.ru/pay/demo.html',
                         comment: 'Тирольский пирог с яблоками, грушами, ветчиной, сыром, ананасами, 50см'
                     });
 ```
