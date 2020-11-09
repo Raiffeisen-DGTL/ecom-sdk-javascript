@@ -1,0 +1,31 @@
+stages:
+  - verify
+  - deploy
+
+variables:
+  APP_NAME: ecom-sdk-javascript
+
+# -cxpassword "$CX_PASSWORD"
+
+chekmarks:
+  stage: verify
+  image: artifactory.raiffeisen.ru/automation-docker/checkmarx-cli:latest
+  variables:
+    CX_HIGH: "0"
+    CX_MEDIUM: "0"
+    CX_LOW: "0"
+    CX_PRESET: "Checkmarx Default"
+    CX_SERVER: "https://s-msk-p-chkmrx1.raiffeisen.ru/"
+    CX_TEAM: "\\CxServer\\RAIFFEISEN"
+    CX_USER: "raiffeisen\\srv_chkmarx"
+  script:
+    - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -cxuser "$CX_USER" -projectname "$CX_TEAM\\$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
+  only:
+    - merge_request
+
+push:
+  stage: deploy
+  script:
+    - git push -f https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-payment-sdk.git master:master
+  only:
+    - master
