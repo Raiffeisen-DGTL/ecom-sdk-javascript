@@ -16,7 +16,7 @@ chekmarks:
     CX_LOW: "0"
     CX_PRESET: "Checkmarx Default"
     CX_SERVER: "https://s-msk-p-chkmrx1.raiffeisen.ru/"
-    CX_TEAM: "\CxServer\RAIFFEISEN\Processing\Acquiring"
+    CX_TEAM: "\\CxServer\\RAIFFEISEN\\Processing\\Acquiring"
   script:
     - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -cxuser "$ARTIFACTORY_LOGIN" -cxpassword "$ARTIFACTORY_PASSWORD" -projectname "$CX_TEAM\\$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
   only:
