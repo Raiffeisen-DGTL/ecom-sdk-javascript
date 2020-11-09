@@ -18,7 +18,7 @@ chekmarks:
     CX_SERVER: "https://s-msk-p-chkmrx1.raiffeisen.ru/"
     CX_TEAM: "\\CxServer\\RAIFFEISEN\\Processing\\Acquiring"
   script:
-    - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -CxUser "$ARTIFACTORY_LOGIN" -CxPassword "$ARTIFACTORY_PASSWORD" -projectname "$CX_TEAM\\$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
+    - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -CxUser "raiffeisen\srv_chkmarx" -CxPassword "" -projectname "$CX_TEAM\\$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
   only:
     - merge_request
 
