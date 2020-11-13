@@ -26,6 +26,6 @@ push:
   stage: deploy
   script:
     - git branch
-    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-payment-sdk.git master:master
+    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-payment-sdk.git HEAD:master
   only:
     - master
