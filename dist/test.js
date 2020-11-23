@@ -40,6 +40,7 @@
             failUrl: document.getElementById('failUrl').value,
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value,
+            paymentMethod: document.getElementById('paymentMethod').value,
         };
 
         try {
@@ -86,6 +87,7 @@
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
+            paymentMethod: paymentData.paymentMethod,
         })
             .then(function(result) {
                 console.log('resolve', result);
@@ -110,6 +112,7 @@
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
+            paymentMethod: paymentData.paymentMethod,
         });
     });
 
@@ -128,6 +131,7 @@
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
+            paymentMethod: paymentData.paymentMethod,
         });
     });
 })();
