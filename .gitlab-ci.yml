@@ -27,6 +27,7 @@ publish-npm:
   script:
     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
     - npm config list
+    - cat .npmrc
     - npm version patch --allow-same-version --force
     - npm publish --access public
   only:
