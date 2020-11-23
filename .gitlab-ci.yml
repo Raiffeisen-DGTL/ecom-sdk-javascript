@@ -26,6 +26,7 @@ publish-npm:
   image: artifactory.raiffeisen.ru/ecom-image-docker/npm:3
   script:
     - npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+    - npm config list
     - npm version patch --allow-same-version --force
     - npm publish --access public
   only:
