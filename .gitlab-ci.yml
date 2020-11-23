@@ -1,11 +1,11 @@
 stages:
   - verify
+  - publish
   - deploy
 
 variables:
   APP_NAME: ecom-sdk-javascript
-
-# -cxpassword "$CX_PASSWORD"
+  VERSION: 1.0.$CI_PIPELINE_IID
 
 chekmarks:
   stage: verify
@@ -21,6 +21,15 @@ chekmarks:
     - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -cxuser "LDAP Authentication\\$ARTIFACTORY_LOGIN" -cxpassword "$ARTIFACTORY_PASSWORD" -projectname "\\CxServer\\RAIFFEISEN\\Processing\\Acquiring\\ecom-js-sdk" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
   only:
     - merge_request
+
+publish-npm:
+  stage: publish
+  image: artifactory.raiffeisen.ru/ecom-image-docker/npm:3
+  script:
+    npm version $VERSION --allow-same-version --force
+    npm publish --registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN
+  only:
+    - master
 
 push:
   stage: deploy
