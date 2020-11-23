@@ -26,8 +26,8 @@ publish-npm:
   stage: publish
   image: artifactory.raiffeisen.ru/ecom-image-docker/npm:3
   script:
-    npm version $VERSION --allow-same-version --force
-    npm publish --registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN
+    - npm version $VERSION --allow-same-version --force
+    - npm publish --registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN
   only:
     - master
 
