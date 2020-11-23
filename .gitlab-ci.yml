@@ -1,11 +1,10 @@
 stages:
   - verify
+  - publish
   - deploy
 
 variables:
   APP_NAME: ecom-sdk-javascript
-
-# -cxpassword "$CX_PASSWORD"
 
 chekmarks:
   stage: verify
@@ -22,10 +21,19 @@ chekmarks:
   only:
     - merge_request
 
+publish-npm:
+  stage: publish
+  image: artifactory.raiffeisen.ru/ecom-image-docker/npm:3
+  script:
+    - npm version patch --allow-same-version --force
+    - npm publish --registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN
+  only:
+    - master
+
 push:
   stage: deploy
   script:
     - git branch
-    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-payment-sdk.git HEAD:master
+    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-front-js-sdk.git HEAD:master
   only:
     - master
