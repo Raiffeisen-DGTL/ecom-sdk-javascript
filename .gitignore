@@ -31,9 +31,10 @@ build*
 *.tar.gz
 
 node_modules
-!/dist/test.html
-!/dist/test.js
-dist
+dist/payment.min.css
+dist/payment.min.js
+dist/payment.styled.js
+dist/payment.styled.min.js
 lib
 lib-style
 coverage
