@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  APP_NAME: ecom-front-js-sdk
+  APP_NAME: ecom-sdk-javascript
 
 chekmarks:
   stage: verify
