@@ -1,10 +1,9 @@
 stages:
   - verify
-  - publish
   - deploy
 
 variables:
-  APP_NAME: ecom-sdk-javascript
+  APP_NAME: ecom-front-js-sdk
 
 chekmarks:
   stage: verify
@@ -21,19 +20,10 @@ chekmarks:
   only:
     - merge_request
 
-publish-npm:
-  stage: publish
-  image: artifactory.raiffeisen.ru/ecom-image-docker/npm:3
-  script:
-    - npm version patch --allow-same-version --force
-    - npm publish --registry=registry.npmjs.org/:_authToken=$NPM_TOKEN
-  only:
-    - master
-
 push:
   stage: deploy
   script:
     - git branch
-    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/ecom-front-js-sdk.git HEAD:master
+    - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/$APP_NAME.git HEAD:master
   only:
     - master
