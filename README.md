@@ -130,8 +130,8 @@ paymentPage.replace({amount: 10.10});
 
 В зависимости от titlePlace зависит размер логотипа:
 
-* titlePlace: 'right' => узкий логотип: 60x40;
-* titlePlace: 'bottom' => широкий логотип: 340x40.
+* titlePlace: 'RIGHT' => узкий логотип: 60x40;
+* titlePlace: 'BOTTOM' => широкий логотип: 340x40.
 
 #### Пример открытия во всплывающем окне с необязательными параметрами
 
@@ -154,7 +154,7 @@ paymentPage.openPopup({
                             },
                             header: {
                                 logo: 'https://www.raiffeisen.ru/common/new/images/logo-raif.svg',
-                                titlePlace: 'right'
+                                titlePlace: 'RIGHT'
                             }
                         },
                         comment: 'Тирольский пирог с яблоками, грушами, ветчиной, сыром, ананасами, 50см'
@@ -194,7 +194,7 @@ paymentPage.openWindow({
                             },
                             header: {
                                 logo: 'https://www.raiffeisen.ru/common/new/images/logo-raif.svg',
-                                titlePlace: 'right'
+                                titlePlace: 'RIGHT'
                             }
                         },
                         comment: 'Тирольский пирог с яблоками, грушами, ветчиной, сыром, ананасами, 50см'
