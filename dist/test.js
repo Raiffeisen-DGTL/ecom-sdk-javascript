@@ -19,7 +19,7 @@
             },
             header: {
                 logo: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRHyucFf66c6YZGyErymx67X_VSzI_WX5xsLwJbJ9wyJxY3Cz1P',
-                titlePlace: 'right'
+                titlePlace: 'RIGHT'
             }
         },
         2,
