@@ -1,2 +1,0 @@
-[alias]
-    unshallow = !"git fetch --unshallow \"${1:-origin}\" # Unshallow from remote $1 (defaults to origin)"
