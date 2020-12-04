@@ -25,6 +25,7 @@ push:
   script:
     - git branch
     - git filter-branch -- --all
+    - git fetch --unshallow origin
     - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/$APP_NAME.git HEAD:master --force
   only:
     - master
