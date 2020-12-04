@@ -3,6 +3,7 @@ stages:
   - deploy
 
 variables:
+  VERSION: 1.1.$CI_PIPELINE_IID
   APP_NAME: ecom-sdk-javascript
 
 chekmarks:
@@ -25,7 +26,7 @@ push:
   script:
     - git config --global user.email "ecom@raiffeisen.ru"
     - git config --global user.name "user-ecom-git"
-    - npm version patch
+    - npm version $VERSION
     - git fetch --unshallow origin
     - git push https://$OPEN_SOURCE_GITHUB_LOGIN:$OPEN_SOURCE_GITHUB_PASSWORD@github.com/Raiffeisen-DGTL/$APP_NAME.git HEAD:master --force
   only:
