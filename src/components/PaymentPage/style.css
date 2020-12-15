@@ -22,8 +22,8 @@
 
 .cross {
     right: 27px;
-    text-align: center;
     top: 27px;
+    text-align: center;
     color: #fff;
     position: fixed;
     font-size: 2rem;
