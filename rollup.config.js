@@ -8,6 +8,7 @@ import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 import autoprefixer from 'autoprefixer';
 import pkg from './package.json';
+import copy from 'rollup-plugin-copy';
 
 const env = process.env.NODE_ENV;
 const extract = Boolean(process.env.STYLE_EXTRACT);
@@ -21,6 +22,11 @@ const config = {
     name: 'PaymentPageSdk'
   },
   plugins: [
+    copy({
+      targets: [
+        { src: ['public/test.html', 'public/test.js'], dest: 'dist' },
+      ]
+    }),
     nodeResolve({
       modulesOnly: format === 'cjs'
     }),
@@ -38,7 +44,7 @@ const config = {
           browsers: ["last 2 versions", "ie >= 9"]
         },
         loose: true,
-        modules: false 
+        modules: false
       }]],
       plugins: [
         ['@babel/proposal-decorators', { legacy: true }],
