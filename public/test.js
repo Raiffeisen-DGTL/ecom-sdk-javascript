@@ -72,15 +72,15 @@
             total: document.getElementById('total').value
         };
 
-        result.extra = JSON.parse(extraString);
+        result.extra = extraString ? JSON.parse(extraString) : '';
 
-        result.receipt = JSON.parse(receiptString);
+        result.receipt = receiptString ? JSON.parse(receiptString) : '';
 
-        result.style = JSON.parse(styleString);
+        result.style = styleString ? JSON.parse(styleString) : '';
 
-        result.client = JSON.parse(clientString);
+        result.client = clientString ? JSON.parse(clientString) : '';
 
-        result.items = JSON.parse(itemsString);
+        result.items = itemsString ? JSON.parse(itemsString) : '';
 
         return result;
     };
