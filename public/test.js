@@ -38,12 +38,12 @@
     document.getElementById('items').value = JSON.stringify(
         [{
             name: 'Наименование товара',
-            price: 10,
+            price: 10.11,
             quantity: 2,
-            amount: 20,
+            amount: 20.22,
             vat: {
-                type: 'none',
-                amount: 20
+                type: 'vat20',
+                amount: 3.37
             }
         }],
         2,
