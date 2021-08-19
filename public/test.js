@@ -68,8 +68,7 @@
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
             locale: document.getElementById('locale').value,
-            receiptNumber: document.getElementById('receiptNumber').value,
-            total: document.getElementById('total').value
+            receiptNumber: document.getElementById('receiptNumber').value
         };
 
         result.extra = extraString ? JSON.parse(extraString) : '';
@@ -105,7 +104,6 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receiptNumber: paymentData.receiptNumber,
-            total: paymentData.total,
             client: paymentData.client,
             items: paymentData.items
         })
@@ -135,7 +133,6 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receiptNumber: paymentData.receiptNumber,
-            total: paymentData.total,
             client: paymentData.client,
             items: paymentData.items
         });
@@ -159,7 +156,6 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receiptNumber: paymentData.receiptNumber,
-            total: paymentData.total,
             client: paymentData.client,
             items: paymentData.items
         });
