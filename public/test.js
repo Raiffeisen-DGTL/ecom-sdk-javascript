@@ -26,29 +26,26 @@
         2
     );
 
-    document.getElementById('client').value = JSON.stringify(
-        {
-            email: '',
+    document.getElementById('receipt').value = JSON.stringify({
+        customer: {
+            email: 'test@test.ru',
             name: 'Петров Иван Олегович'
         },
-        2,
-        2
-    );
-
-    document.getElementById('items').value = JSON.stringify(
-        [{
+        receiptNumber: '1234',
+        items: [{
             name: 'Наименование товара',
             price: 10.11,
             quantity: 2,
             amount: 20.22,
+            paymentObject: 'commodity',
             vat: {
                 type: 'vat20',
                 amount: 3.37
             }
-        }],
-        2,
-        2
-    );
+        }]
+    },
+    2,
+    2);
 
     document.getElementById('orderId').value = Math.floor(Math.random() * 99999).toString().substr(0, 5);
 
@@ -56,8 +53,6 @@
         const extraString = document.getElementById('extra').value; // параметры, которые придут пользователю (любые данные)
         const receiptString = document.getElementById('receipt').value; // нужен для того, чтобы зарегистрировать чек
         const styleString = document.getElementById('style').value; // мерч может сам настроить стилизацию
-        const clientString = document.getElementById('client').value;
-        const itemsString = document.getElementById('items').value;
 
         const result = {
             amount: document.getElementById('amount').value, // цена
@@ -67,8 +62,7 @@
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
-            locale: document.getElementById('locale').value,
-            receiptNumber: document.getElementById('receiptNumber').value
+            locale: document.getElementById('locale').value
         };
 
         result.extra = extraString ? JSON.parse(extraString) : '';
@@ -76,10 +70,6 @@
         result.receipt = receiptString ? JSON.parse(receiptString) : '';
 
         result.style = styleString ? JSON.parse(styleString) : '';
-
-        result.client = clientString ? JSON.parse(clientString) : '';
-
-        result.items = itemsString ? JSON.parse(itemsString) : '';
 
         return result;
     };
@@ -103,9 +93,7 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receiptNumber: paymentData.receiptNumber,
-            client: paymentData.client,
-            items: paymentData.items
+            receipt: paymentData.receipt
         })
             .then(function (result) {
                 console.log('resolve', result);
@@ -132,9 +120,7 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receiptNumber: paymentData.receiptNumber,
-            client: paymentData.client,
-            items: paymentData.items
+            receipt: paymentData.receipt
         });
     });
 
@@ -155,9 +141,7 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receiptNumber: paymentData.receiptNumber,
-            client: paymentData.client,
-            items: paymentData.items
+            receipt: paymentData.receipt
         });
     });
 })();
