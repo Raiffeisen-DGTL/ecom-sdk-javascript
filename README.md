@@ -136,53 +136,53 @@ paymentPage.replace({amount: 10.10});
 * titlePlace: 'BOTTOM' => широкий логотип: 340x40.
 
 **Для фискализации чеков на форме оплаты:**
-
-* receiptNumber (String
+* receipt (Object)
+  * receiptNumber (String
 ) `maxLength: 128
 ` - уникальный номер чека, который создается на стороне мерчанта. Выполняет роль сквозного идентификатора. Формат A
 -Za-z0-9_-;
-* client (Object) - данные о покупателе;
+  * customer (Object) - данные о покупателе;
     * email (String) - электронный адрес покупателя для отправки чека;
     * name (String) `maxLength: 256` - ФИО покупателя;
-* items (Object[]) - позиции чека (не более 100 объектов);
+  * items (Object[]) - позиции чека (не более 100 объектов);
     * name (String) `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
-    * price (Number) - цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8
-     символов на целую часть, 2 - на дробную);
+    * price (Number) - цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
     * quantity (Number) - количество/вес (5 символов на целую часть, 3 - на дробную);
-    * amount (Number) `maxLength: 256` - сумма в рублях (8 символов на целую часть, 2 - на дробную);
+    * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another'];
+    * amount (Number) `maxLength: 256` - Итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` - код товара;
-    * vat (Object) -  Данные о налоге на позицию чека;
+    * vat (Object) - Данные о налоге на позицию чека;
         * type (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
-        * amount (Number) - Сумма налога на позицию чека в рублях (8 символов на целую часть, 2
-         - на дробную);
-* total (Number) - Итоговая сумма чека (8 символов на целую часть, 2 - на дробную);
+        * amount (Number) - Сумма налога на позицию чека в рублях (8 символов на целую часть, 2 - на дробную);
 
 ```js
 paymentPage.openPopup({
   "publicId": "000001680200002-80200002",
   "orderId": "orderTest",
   "amount": 1000.5,
-  "receiptNumber": 3000827351831,
-  "client": {
-    "email": "customer@domain.ru",
-    "name": "Иванов Иван Иванович"
+  "receipt": {
+      "receiptNumber": 3000827351831,
+      "customer": {
+          "email": "customer@domain.ru",
+          "name": "Иванов Иван Иванович"
+      },
+      "items": [
+          {
+              "name": "Шоколадные конфеты",
+              "price": 1000,
+              "quantity": 1.2,
+              "paymentObject": "commodity",
+              "amount": 1200,
+              "measurementUnit": "кг",
+              "nomenclatureCode": 1704909900,
+              "vat": {
+                  "type": "vat20",
+                  "amount": 200
+              }
+          }
+      ], 
   },
-  "items": [
-    {
-      "name": "Шоколадные конфеты",
-      "price": 1000,
-      "quantity": 1.2,
-      "amount": 1200,
-      "measurementUnit": "кг",
-      "nomenclatureCode": 1704909900,
-      "vat": {
-        "type": "vat20",
-        "amount": 200
-      }
-    }
-  ],
-  "total": 1200
 })
 ```
 
