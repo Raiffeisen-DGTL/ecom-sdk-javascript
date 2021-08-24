@@ -162,7 +162,7 @@ paymentPage.openPopup({
   "orderId": "orderTest",
   "amount": 1000.5,
   "receipt": {
-      "receiptNumber": 3000827351831,
+      "receiptNumber": "3000827351831",
       "customer": {
           "email": "customer@domain.ru",
           "name": "Иванов Иван Иванович"
