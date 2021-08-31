@@ -137,18 +137,16 @@ paymentPage.replace({amount: 10.10});
 
 **Для фискализации чеков на форме оплаты:**
 * receipt (Object)
-  * receiptNumber (String
-) `maxLength: 128
-` - уникальный номер чека, который создается на стороне мерчанта. Выполняет роль сквозного идентификатора. Формат A
--Za-z0-9_-;
+  * receiptNumber (String) `maxLength: 99
+` - уникальный номер чека. Создается на стороне мерчанта. Формат A-Za-z0-9_-;
   * customer (Object) - данные о покупателе;
-    * email (String) - электронный адрес покупателя для отправки чека;
+    * email (String) `maxLength: 64` - электронный адрес покупателя для отправки чека;
     * name (String) `maxLength: 256` - ФИО покупателя;
   * items (Object[]) - позиции чека (не более 100 объектов);
     * name (String) `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
     * price (Number) - цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
     * quantity (Number) - количество/вес (5 символов на целую часть, 3 - на дробную);
-    * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another'];
+    * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another']. Если параметр не передан, то заполняется на стороне выбранного ОФД в соответствии с установленным протоколом;
     * amount (Number) `maxLength: 256` - Итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` - код товара;
@@ -160,7 +158,7 @@ paymentPage.replace({amount: 10.10});
 paymentPage.openPopup({
   "publicId": "000001680200002-80200002",
   "orderId": "orderTest",
-  "amount": 1000.5,
+  "amount": 1200,
   "receipt": {
       "receiptNumber": "3000827351831",
       "customer": {
@@ -169,20 +167,20 @@ paymentPage.openPopup({
       },
       "items": [
           {
-              "name": "Шоколадные конфеты",
-              "price": 1000,
-              "quantity": 1.2,
+              "name": "Шоколадный торт",
+              "price": 1200,
+              "quantity": 1,
               "paymentObject": "commodity",
               "amount": 1200,
-              "measurementUnit": "кг",
-              "nomenclatureCode": 1704909900,
+              "measurementUnit": "шт",
+              "nomenclatureCode": "1806201000",
               "vat": {
                   "type": "vat20",
                   "amount": 200
               }
           }
-      ], 
-  },
+      ]
+  }
 })
 ```
 
