@@ -150,9 +150,7 @@ paymentPage.replace({amount: 10.10});
     * amount (Number) `maxLength: 256` - Итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` - код товара;
-    * vat (Object) - Данные о налоге на позицию чека;
-        * type (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
-        * amount (Number) - Сумма налога на позицию чека в рублях (8 символов на целую часть, 2 - на дробную);
+    * vatType (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
 
 ```js
 paymentPage.openPopup({
@@ -174,10 +172,7 @@ paymentPage.openPopup({
               "amount": 1200,
               "measurementUnit": "шт",
               "nomenclatureCode": "1806201000",
-              "vat": {
-                  "type": "vat20",
-                  "amount": 200
-              }
+              "vatType": "vat20"
           }
       ]
   }
