@@ -77,12 +77,12 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 
 ```js
 paymentPage.openPopup({amount: 10.10})
-        .then(function(resolve) {
-                        //console.log(resolve, "Спасибо");
-                    })
+        .then(function() {
+            // console.log("Спасибо");
+        })
         .catch(function() {
-                        //console.log("Неудача");
-                    });
+            // console.log("Неудача");
+        });
 ```
 
 #### Форма оплаты в новой вкладке
