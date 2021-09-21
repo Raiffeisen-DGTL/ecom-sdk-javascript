@@ -149,7 +149,7 @@ paymentPage.replace({amount: 10.10});
     * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another']. Если параметр не передан, то заполняется на стороне выбранного ОФД в соответствии с установленным протоколом;
     * amount (Number) `maxLength: 256` - Итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
-    * nomenclatureCode (String) `maxLength: 150` - код товара;
+    * nomenclatureCode (String) `maxLength: 150` - номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
     * vatType (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
 
 ```js
@@ -171,7 +171,7 @@ paymentPage.openPopup({
               "paymentObject": "commodity",
               "amount": 1200,
               "measurementUnit": "шт",
-              "nomenclatureCode": "1806201000",
+              "nomenclatureCode": "00 00 00 00 12 00 AB 00",
               "vatType": "vat20"
           }
       ]
@@ -205,8 +205,8 @@ paymentPage.openPopup({
                         },
                         comment: 'Тирольский пирог с яблоками, грушами, ветчиной, сыром, ананасами, 50см'
                     })
-        .then(function(resolve) {
-                        //console.log(resolve, "Спасибо");
+        .then(function() {
+                        //console.log("Спасибо");
                     })
         .catch(function() {
                         //console.log("Неудача");
