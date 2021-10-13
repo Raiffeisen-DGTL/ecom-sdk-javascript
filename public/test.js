@@ -26,26 +26,30 @@
         2
     );
 
-    document.getElementById('receipt').value = JSON.stringify({
-        customer: {
-            email: 'test@test.ru',
-            name: 'Петров Иван Олегович'
+    document.getElementById('receipt').value = JSON.stringify(
+        {
+            customer: {
+                email: 'test@test.ru',
+                name: 'Петров Иван Олегович'
+            },
+            receiptNumber: '1234',
+            items: [{
+                name: 'Наименование товара',
+                price: 10.11,
+                quantity: 2,
+                amount: 20.22,
+                paymentObject: 'commodity',
+                vatType: 'vat20'
+            }]
         },
-        receiptNumber: '1234',
-        items: [{
-            name: 'Наименование товара',
-            price: 10.11,
-            quantity: 2,
-            amount: 20.22,
-            paymentObject: 'commodity',
-            vat: {
-                type: 'vat20',
-                amount: 3.37
-            }
-        }]
-    },
-    2,
-    2);
+        2,
+        2
+    );
+
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    const todayISOString = today.toISOString();
+    document.getElementById('expirationDate').value = `${todayISOString.slice(0, todayISOString.length - 1)}+03:00`;
 
     document.getElementById('orderId').value = Math.floor(Math.random() * 99999).toString().substr(0, 5);
 
@@ -62,7 +66,8 @@
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
-            locale: document.getElementById('locale').value
+            locale: document.getElementById('locale').value,
+            expirationDate: document.getElementById('expirationDate').value
         };
 
         result.extra = extraString ? JSON.parse(extraString) : '';
@@ -93,7 +98,8 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receipt: paymentData.receipt
+            receipt: paymentData.receipt,
+            expirationDate: paymentData.expirationDate
         })
             .then(function (result) {
                 console.log('resolve', result);
@@ -120,7 +126,8 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receipt: paymentData.receipt
+            receipt: paymentData.receipt,
+            expirationDate: paymentData.expirationDate
         });
     });
 
@@ -141,7 +148,8 @@
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
-            receipt: paymentData.receipt
+            receipt: paymentData.receipt,
+            expirationDate: paymentData.expirationDate
         });
     });
 })();
