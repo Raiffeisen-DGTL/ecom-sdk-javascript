@@ -2,24 +2,14 @@ stages:
   - verify
   - deploy
 
+include:
+  - project: 'acquiring/devops/pipelines'
+    ref: master
+    file: '.checkmarx-java.yml'
+
 variables:
   VERSION: 1.1.$CI_PIPELINE_IID
   APP_NAME: ecom-sdk-javascript
-
-chekmarks:
-  stage: verify
-  image: artifactory.raiffeisen.ru/automation-docker/checkmarx-cli:latest
-  variables:
-    CX_HIGH: "0"
-    CX_MEDIUM: "0"
-    CX_LOW: "0"
-    CX_PRESET: "Checkmarx Default"
-    CX_SERVER: "https://s-msk-p-chkmrx1.raiffeisen.ru/"
-    CX_TEAM: "\\CxServer\\RAIFFEISEN\\Processing\\Acquiring"
-  script:
-    - /bin/sh /CxPlugin/cxcli/runCxConsole.sh AsyncScan -cxserver "$CX_SERVER" -cxuser "LDAP Authentication\\$ARTIFACTORY_LOGIN" -cxpassword "$ARTIFACTORY_PASSWORD" -projectname "\\CxServer\\RAIFFEISEN\\Processing\\Acquiring\\ecom-js-sdk" -preset "$CX_PRESET" -locationtype folder -locationpath $CI_PROJECT_DIR -sasthigh $CX_HIGH -sastmedium $CX_MEDIUM -sastlow $CX_LOW -reportxml $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.xml -reportpdf $CI_PROJECT_DIR/results-$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME.pdf -comment "git $CI_COMMIT_REF_NAME@$CI_COMMIT_SHA" -v
-  only:
-    - merge_request
 
 push:
   stage: deploy
