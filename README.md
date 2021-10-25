@@ -116,6 +116,7 @@ paymentPage.replace({amount: 10.10});
 * paymentMethod (['ONLY_SBP', 'ONLY_ACQUIRING
 ']) - способ оплаты, отображающий соответствующую форму. Если параметр не передан отображается и acquiring, и СБП.
 * locale (['ru', 'en']) - Выбор языка формы, по умолчанию `ru`.
+* expirationDate (String) - Срок жизни заказа. YYYY-MM-DD ТHH24:MM:SS±HH:MM
 
 Дополнительно можно стилизовать страницу, это достигается путём добавления параметра `style`:
 
