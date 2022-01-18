@@ -152,6 +152,11 @@ paymentPage.replace({amount: 10.10});
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` - номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1 DataMatrix. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
     * vatType (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
+    * agentType (String) - признак агента по предмету расчета. Опциональный параметр, который заполняется только для операций через агента ['bank_paying_agent','bank_paying_subagent', 'paying_agent', 'paying_subagent', 'attorney' ,'commission_agent', 'another'];
+    * supplierInfo (Object) - данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
+      * phone (String) - телефон поставщика. Заполняется по формату "+79991234567" или "79991234567". После кода 7 должно быть указано 10 цифр;
+      * name (String) - наименование поставщика;
+      * inn (String) `maxLength: 12` - ИНН поставщика. Может содержать только цифры в количестве 10 или 12 символов;
 
 ```js
 paymentPage.openPopup({
@@ -173,7 +178,13 @@ paymentPage.openPopup({
               "amount": 1200,
               "measurementUnit": "шт",
               "nomenclatureCode": "00 00 00 00 12 00 AB 00",
-              "vatType": "vat20"
+              "vatType": "vat20",
+              "agentType": "another",
+              "supplierInfo": {
+                  "phone": "+79991234567",
+                  "name": "ООО «Ромашка»",
+                  "inn": "1234567890"
+              }
           }
       ]
   }
