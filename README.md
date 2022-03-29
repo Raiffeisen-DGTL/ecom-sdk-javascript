@@ -148,6 +148,9 @@ paymentPage.replace({amount: 10.10});
     * price (Number) - цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
     * quantity (Number) - количество/вес (5 символов на целую часть, 3 - на дробную);
     * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another']. Если параметр не передан, то заполняется на стороне выбранного ОФД в соответствии с установленным протоколом;
+    * paymentMode (String) - способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
+      * FULL_PREPAYMENT – 100% предоплата до момента передачи предмета расчета
+      * FULL_PAYMENT – полная оплата в момент передачи предмета расчета;
     * amount (Number) `maxLength: 256` - итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
     * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` - номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1 DataMatrix. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
@@ -175,6 +178,7 @@ paymentPage.openPopup({
               "price": 1200,
               "quantity": 1,
               "paymentObject": "commodity",
+              "paymentMode": "FULL_PAYMENT",
               "amount": 1200,
               "measurementUnit": "шт",
               "nomenclatureCode": "00 00 00 00 12 00 AB 00",
