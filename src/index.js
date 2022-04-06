@@ -32,7 +32,7 @@ class PaymentPageSdk {
 
         this.publicId = publicId;
         this.version = VERSION;
-        this.url = prepareUrl(options.url || 'https://e-commerce.raiffeisen.ru/pay');
+        this.url = prepareUrl(options.url || 'https://pay.raif.ru/pay');
     }
 
     closePopup = resolve => () => {
