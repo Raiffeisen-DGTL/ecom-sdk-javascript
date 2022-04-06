@@ -28,7 +28,7 @@ JS библиотека для работы с [формой оплаты Рай
 Для рабочего проекта подключите скрипт:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.min.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.styled.min.js"></script>
 ```
 
 или
@@ -52,7 +52,7 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 `test`
 ```js
     const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
-        url: 'https://test.ecom.raiffeisen.ru/pay'
+        url: 'https://pay-test.raif.ru/pay'
     });
 ```
 
@@ -240,7 +240,7 @@ paymentPage.openWindow({
                         amount: 10.10,
                         orderId: '91700',
                         successUrl: 'https://www.raiffeisen.ru',
-                        failUrl: 'https://e-commerce.raiffeisen.ru/pay/demo.html',
+                        failUrl: 'https://pay.raif.ru/pay/demo.html',
                         extra: {
                             email: 'test@test.ru',
                             login: 'testLogin',
@@ -275,7 +275,7 @@ paymentPage.openWindow({
 Не минифицированный скрипт со стилями внутри:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.styled.js"></script>
 ```
 
 ### Раздельное подключение стилей отдельным файлом
@@ -285,13 +285,13 @@ paymentPage.openWindow({
 Подключение стилей:
 
 ```
-<link rel="stylesheet" href="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.css">
+<link rel="stylesheet" href="https://pay.raif.ru/pay/sdk/v2/payment.min.css">
 ```
 
 Подключение библиотеки:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.min.js"></script>
 ```
 
 #### Подключение модуля
