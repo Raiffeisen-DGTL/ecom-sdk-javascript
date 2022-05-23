@@ -63,6 +63,7 @@
             orderId: document.getElementById('orderId').value, // номер заказа
             successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
+            successSbpUrl: document.getElementById('successSbpUrl').value,
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
@@ -99,7 +100,8 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            successSbpUrl: paymentData.successSbpUrl
         })
             .then(function (result) {
                 console.log('resolve', result);
@@ -121,6 +123,7 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
+            successSbpUrl: paymentData.successSbpUrl,
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
@@ -143,6 +146,7 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
+            successSbpUrl: paymentData.successSbpUrl,
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
