@@ -68,7 +68,8 @@
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
             locale: document.getElementById('locale').value,
-            expirationDate: document.getElementById('expirationDate').value
+            expirationDate: document.getElementById('expirationDate').value,
+            paymentDetails: document.getElementById('paymentDetails').value
         };
 
         result.extra = extraString ? JSON.parse(extraString) : '';
@@ -101,7 +102,8 @@
             locale: paymentData.locale,
             receipt: paymentData.receipt,
             expirationDate: paymentData.expirationDate,
-            successSbpUrl: paymentData.successSbpUrl
+            successSbpUrl: paymentData.successSbpUrl,
+            paymentDetails: paymentData.paymentDetails
         })
             .then(function (result) {
                 console.log('resolve', result);
@@ -130,7 +132,8 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            paymentDetails: paymentData.paymentDetails
         });
     });
 
@@ -153,7 +156,8 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            paymentDetails: paymentData.paymentDetails
         });
     });
 })();
