@@ -99,6 +99,11 @@ paymentPage.replace({amount: 10.10});
 
 ### `Расширенные сценарии`
 
+* [Без чека](#без-чека)
+* [С чеком (ФФД 1.05)](#с-чеком-ффд-1-05)
+* [С чеком (ФФД 1.2)](#с-чеком-ффд-1-2)
+
+### Без чека
 **Обязательные параметры:**
 
 * publicId (String) - идентификатор продавца;
@@ -136,30 +141,83 @@ paymentPage.replace({amount: 10.10});
 * titlePlace: 'RIGHT' => узкий логотип: 60x40;
 * titlePlace: 'BOTTOM' => широкий логотип: 340x40.
 
-**Для фискализации чеков на форме оплаты:**
+### С чеком (ФФД 1.05)
+
+> Если вы хотите фискализировать чеки через форму оплаты по ФФД 1.05, необходимо дополнительно передавать параметры чека:
+
 * receipt (Object)
   * receiptNumber (String) `maxLength: 99
-` - уникальный номер чека. Создается на стороне мерчанта. Формат A-Za-z0-9_-;
-  * customer (Object) - данные о покупателе;
+` – уникальный номер чека. Формат `A-Za-z0-9_-`;
+  * customer (Object) – данные о покупателе;
     * email (String) `maxLength: 64` - электронный адрес покупателя для отправки чека;
     * name (String) `maxLength: 256` - ФИО покупателя;
-  * items (Object[]) - позиции чека (не более 100 объектов);
-    * name (String) `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
-    * price (Number) - цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
-    * quantity (Number) - количество/вес (5 символов на целую часть, 3 - на дробную);
-    * paymentObject (String) - признак предмета расчёта ['commodity', 'excise', 'job', 'service', 'payment', 'another']. Если параметр не передан, то заполняется на стороне выбранного ОФД в соответствии с установленным протоколом;
-    * paymentMode (String) - способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
+  * items (Object[]) `required` – позиции чека (не более 100 объектов);
+    * name (String) `required` `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
+    * price (Number) `required` – цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
+    * quantity (Number) `required` – количество/вес (5 символов на целую часть, 3 - на дробную);
+    * amount (Number) `required` – итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
+    * paymentObject (String) – признак предмета расчёта ['COMMODITY', 'EXCISE', 'JOB', 'SERVICE', 'PAYMENT', 'ANOTHER']. Для авансовых чеков и чеков частичной предоплаты должен заполняться значением PAYMENT. Если параметр не передан, то заполняется значением COMMODITY по умолчанию;
+    * paymentMode (String) – способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT', 'ADVANCE', 'PREPAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
       * FULL_PREPAYMENT – 100% предоплата до момента передачи предмета расчета
-      * FULL_PAYMENT – полная оплата в момент передачи предмета расчета;
-    * amount (Number) `maxLength: 256` - итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
-    * measurementUnit (String) `maxLength: 16` - единица измерения товара, работы, услуги, иного предмета расчета;
-    * nomenclatureCode (String) `maxLength: 150` - номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1 DataMatrix. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
-    * vatType (String) - ставка НДС ['none', 'vat0', 'vat10', 'vat110', 'vat20', 'vat120'];
-    * agentType (String) - признак агента по предмету расчета. Опциональный параметр, который заполняется только для операций через агента ['bank_paying_agent','bank_paying_subagent', 'paying_agent', 'paying_subagent', 'attorney' ,'commission_agent', 'another'];
-    * supplierInfo (Object) - данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
-      * phone (String) - телефон поставщика. Заполняется по формату "+79991234567", после кода +7 должно быть указано 10 цифр;
-      * name (String) - наименование поставщика;
-      * inn (String) `maxLength: 12` - ИНН поставщика. Может содержать только цифры в количестве 10 или 12 символов;
+      * FULL_PAYMENT – полная оплата в момент передачи предмета расчета
+      * ADVANCE – аванс
+      * PREPAYMENT – частичная предоплата до момента передачи предмета расчета;
+    * measurementUnit (String) `maxLength: 16` – единица измерения товара, работы, услуги, иного предмета расчета;
+    * nomenclatureCode (String) `maxLength: 150` – номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1 DataMatrix. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
+    * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120'];
+    * agentType (String) – признак агента по предмету расчета. Заполняется только для операций через агента ['BANK_PAYING_AGENT', 'BANK_PAYING_SUBAGENT', 'PAYING_AGENT', 'PAYING_SUBAGENT', 'ATTORNEY' , 'COMMISSION_AGENT', 'ANOTHER'];
+    * supplierInfo (Object) – данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
+      * phone (String) – телефон поставщика. Заполняется по формату "+79991234567", после кода +7 должно быть указано 10 цифр;
+      * name (String) – наименование поставщика;
+      * inn (String) `required` `maxLength: 12` – ИНН поставщика. Может содержать только цифры в количестве 10 или 12 символов;
+  * payments (Object[]) – данные об оплате, только для чеков с зачетом аванса или частичной предоплаты. Если payments не передан, то по умолчанию заполняется безналичным видом оплаты и ее суммой, которая равна сумме чека;
+    * type (String) `required` – вид оплаты ['E_PAYMENT', 'PREPAID'].
+      * E_PAYMENT – безналичная оплата
+      * PREPAID – предварительная оплата (зачет аванса и/или предыдущих платежей);
+    * amount (Number) `required` – сумма оплаты
+
+### С чеком (ФФД 1.2)
+
+> Если вы хотите фискализировать чеки через форму оплаты по ФФД 1.2, необходимо дополнительно передавать параметры чека:
+
+* receipt (Object)
+    * receiptNumber (String) `maxLength: 99` – уникальный номер чека. Формат `A-Za-z0-9_-`;
+    * customer (Object) – данные о покупателе;
+        * email (String) `maxLength: 64` – электронный адрес покупателя для отправки чека;
+        * extra (Object) – дополнительная информация о покупателе. Заполняется как объект свободного наполнения;
+    * items (Object[]) `required` – позиции чека (не более 100 объектов);
+        * name (String) `required` `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
+        * price (Number) `required` – цена за единицу товара, работы, услуги, иного предмета расчета в рублях (8 символов на целую часть, 2 - на дробную);
+        * quantity (Number) `required` – количество/вес (5 символов на целую часть, 3 - на дробную);
+        * amount (Number) `required` – итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
+        * paymentObject (String) – признак предмета расчёта ['COMMODITY', 'COMMODITY_MARKING_NO_CODE', 'COMMODITY_MARKING_WITH_CODE', 'EXCISE', 'EXCISE_MARKING_NO_CODE', 'EXCISE_MARKING_WITH_CODE', 'JOB', 'SERVICE', 'PAYMENT', 'ANOTHER']. Для авансовых чеков и чеков частичной предоплаты должен заполняться значением PAYMENT. Если параметр не передан, то заполняется значением COMMODITY по умолчанию;
+        * paymentMode (String) – способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT', 'ADVANCE', 'PREPAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
+            * FULL_PREPAYMENT – 100% предоплата до момента передачи предмета расчета
+            * FULL_PAYMENT – полная оплата в момент передачи предмета расчета
+            * ADVANCE – аванс
+            * PREPAYMENT – частичная предоплата до момента передачи предмета расчета;
+        * measurementUnit (String) – единица измерения товара, работы, услуги, иного предмета расчета ['PIECE', 'GRAM', 'KILOGRAM', 'TON', 'CENTIMETER', 'DECIMETER', 'METER', 'SQUARE_CENTIMETER', 'SQUARE_DECIMETER', 'SQUARE_METER', 'MILLILITER', 'LITER', 'CUBIC_METER', 'KILOWATT_HOUR', 'GIGACALORIE', 'DAY', 'HOUR', 'MINUTE', 'SECOND', 'KILOBYTE', 'MEGABYTE', 'GIGABYTE', 'TERABYTE', 'OTHER']. Если передано значение вне списка выше, то в ОФД автоматически будет передано OTHER;
+        * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120'];
+        * agentType (String) – признак агента по предмету расчета. Заполняется только для операций через агента ['BANK_PAYING_AGENT', 'BANK_PAYING_SUBAGENT', 'PAYING_AGENT', 'PAYING_SUBAGENT', 'ATTORNEY' , 'COMMISSION_AGENT', 'ANOTHER'];
+        * supplierInfo (Object) – данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
+            * phone (String) – телефон поставщика. Заполняется по формату "+79991234567", после кода +7 должно быть указано 10 цифр;
+            * name (String) – наименование поставщика;
+            * inn (String) `required` `maxLength: 12` – ИНН поставщика. Может содержать только цифры в количестве 10 или 12 символов;
+        * marking (Object) – данные маркировки. Обязательно для маркированного товара, который имеет код маркировки;
+          * quantity (Object) – дробное количество маркированного товара. Обязательно для дробного маркированного товара, который имеет код маркировки. Тогда параметр measurementUnit должен иметь значение PIECE;
+            * numerator (Number) – числитель дробной части
+            * denominator (Number) – знаменатель дробной части
+          * code (Object) `required` – код маркировки
+            * format (String) `required` – формат кода маркировки ['UNKNOWN', 'EAN8', 'EAN13', 'ITF14', 'GS1M', 'SHORT', 'FUR', 'EGAIS20', 'EGAIS30']
+            * value (String) `required` – код маркировки в соответствии с форматом;
+    * payments (Object[]) – данные об оплате, только для чеков с зачетом аванса или частичной предоплаты. Если payments не передан, то по умолчанию заполняется безналичным видом оплаты и ее суммой, которая равна сумме чека;
+        * type (String) `required` – вид оплаты ['E_PAYMENT', 'PREPAID'].
+            * E_PAYMENT – безналичная оплата
+            * PREPAID – предварительная оплата (зачет аванса и/или предыдущих платежей);
+        * amount (Number) `required` – сумма оплаты
+
+
+#### Пример открытия платежной формы с передачей данных чека (для ФФД 1.05 и ФФД 1.2)
 
 ```js
 paymentPage.openPopup({
@@ -169,26 +227,17 @@ paymentPage.openPopup({
   "receipt": {
       "receiptNumber": "3000827351831",
       "customer": {
-          "email": "customer@domain.ru",
-          "name": "Иванов Иван Иванович"
+          "email": "customer@domain.ru"
       },
       "items": [
           {
               "name": "Шоколадный торт",
               "price": 1200,
               "quantity": 1,
-              "paymentObject": "commodity",
+              "paymentObject": "COMMODITY",
               "paymentMode": "FULL_PAYMENT",
               "amount": 1200,
-              "measurementUnit": "шт",
-              "nomenclatureCode": "00 00 00 00 12 00 AB 00",
-              "vatType": "vat20",
-              "agentType": "another",
-              "supplierInfo": {
-                  "phone": "+79991234567",
-                  "name": "ООО «Ромашка»",
-                  "inn": "1234567890"
-              }
+              "vatType": "VAT20"
           }
       ]
   }
