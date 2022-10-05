@@ -63,11 +63,13 @@
             orderId: document.getElementById('orderId').value, // номер заказа
             successUrl: document.getElementById('successUrl').value,
             failUrl: document.getElementById('failUrl').value,
+            successSbpUrl: document.getElementById('successSbpUrl').value,
             comment: document.getElementById('comment').value, // описание товара
             publicId: document.getElementById('publicId').value,
             paymentMethod: document.getElementById('paymentMethod').value,
             locale: document.getElementById('locale').value,
-            expirationDate: document.getElementById('expirationDate').value
+            expirationDate: document.getElementById('expirationDate').value,
+            paymentDetails: document.getElementById('paymentDetails').value
         };
 
         result.extra = extraString ? JSON.parse(extraString) : '';
@@ -99,7 +101,9 @@
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            successSbpUrl: paymentData.successSbpUrl,
+            paymentDetails: paymentData.paymentDetails
         })
             .then(function (result) {
                 console.log('resolve', result);
@@ -121,13 +125,15 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
+            successSbpUrl: paymentData.successSbpUrl,
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            paymentDetails: paymentData.paymentDetails
         });
     });
 
@@ -143,13 +149,15 @@
             orderId: paymentData.orderId,
             successUrl: paymentData.successUrl,
             failUrl: paymentData.failUrl,
+            successSbpUrl: paymentData.successSbpUrl,
             comment: paymentData.comment,
             extra: paymentData.extra,
             style: paymentData.style,
             paymentMethod: paymentData.paymentMethod,
             locale: paymentData.locale,
             receipt: paymentData.receipt,
-            expirationDate: paymentData.expirationDate
+            expirationDate: paymentData.expirationDate,
+            paymentDetails: paymentData.paymentDetails
         });
     });
 })();

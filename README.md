@@ -28,7 +28,7 @@ JS библиотека для работы с [формой оплаты Рай
 Для рабочего проекта подключите скрипт:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.min.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.styled.min.js"></script>
 ```
 
 или
@@ -52,7 +52,7 @@ import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 `test`
 ```js
     const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
-        url: 'https://test.ecom.raiffeisen.ru/pay'
+        url: 'https://pay-test.raif.ru/pay'
     });
 ```
 
@@ -122,6 +122,8 @@ paymentPage.replace({amount: 10.10});
 ']) - способ оплаты, отображающий соответствующую форму. Если параметр не передан отображается и acquiring, и СБП.
 * locale (['ru', 'en']) - Выбор языка формы, по умолчанию `ru`.
 * expirationDate (String) - Срок жизни заказа. YYYY-MM-DD ТHH24:MM:SS±HH:MM
+* successSbpUrl (String) - ссылка для автоматического возврата плательщика из приложения банка в приложение или на сайт магазина. Ссылка должна содержать `https://` для web страниц или уникальную схему для мобильного приложения.
+* paymentDetails (String) - назначение платежа.
 
 Дополнительно можно стилизовать страницу, это достигается путём добавления параметра `style`:
 
@@ -289,7 +291,7 @@ paymentPage.openWindow({
                         amount: 10.10,
                         orderId: '91700',
                         successUrl: 'https://www.raiffeisen.ru',
-                        failUrl: 'https://e-commerce.raiffeisen.ru/pay/demo.html',
+                        failUrl: 'https://pay.raif.ru/pay/demo.html',
                         extra: {
                             email: 'test@test.ru',
                             login: 'testLogin',
@@ -324,7 +326,7 @@ paymentPage.openWindow({
 Не минифицированный скрипт со стилями внутри:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.styled.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.styled.js"></script>
 ```
 
 ### Раздельное подключение стилей отдельным файлом
@@ -334,13 +336,13 @@ paymentPage.openWindow({
 Подключение стилей:
 
 ```
-<link rel="stylesheet" href="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.css">
+<link rel="stylesheet" href="https://pay.raif.ru/pay/sdk/v2/payment.min.css">
 ```
 
 Подключение библиотеки:
 
 ```
-<script src="https://e-commerce.raiffeisen.ru/pay/sdk/v2/payment.min.js"></script>
+<script src="https://pay.raif.ru/pay/sdk/v2/payment.min.js"></script>
 ```
 
 #### Подключение модуля
