@@ -151,7 +151,7 @@ paymentPage.replace({amount: 10.10});
   * receiptNumber (String) `maxLength: 99
 ` – уникальный номер чека. Формат `A-Za-z0-9_-`;
   * customer (Object) – данные о покупателе;
-    * email (String) `maxLength: 64` - электронный адрес покупателя для отправки чека;
+    * email (String) `required` `maxLength: 64` - электронный адрес покупателя для отправки чека;
     * name (String) `maxLength: 256` - ФИО покупателя;
   * items (Object[]) `required` – позиции чека (не более 100 объектов);
     * name (String) `required` `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
@@ -185,7 +185,7 @@ paymentPage.replace({amount: 10.10});
 * receipt (Object)
     * receiptNumber (String) `maxLength: 99` – уникальный номер чека. Формат `A-Za-z0-9_-`;
     * customer (Object) – данные о покупателе;
-        * email (String) `maxLength: 64` – электронный адрес покупателя для отправки чека;
+        * email (String) `required` `maxLength: 64` – электронный адрес покупателя для отправки чека;
         * extra (Object) – дополнительная информация о покупателе. Заполняется как объект свободного наполнения;
     * items (Object[]) `required` – позиции чека (не более 100 объектов);
         * name (String) `required` `maxLength: 128` - наименование товара, работы, услуги, иного предмета расчета;
