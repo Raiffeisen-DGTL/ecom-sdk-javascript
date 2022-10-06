@@ -17,6 +17,7 @@ checkmarx:
 
 push:
   stage: deploy
+  image: artifactory.raiffeisen.ru/ecom-image-docker/cli-tools:$CLI_TOOLS_TAG
   script:
     - git config --global user.email "ecom@raiffeisen.ru"
     - git config --global user.name "user-ecom-git"
