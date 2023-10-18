@@ -360,3 +360,4 @@ import '@raiffeisen-ecom/payment-sdk/lib-style/index.css';
 ```
 import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk/lib-style';
 ```
+
