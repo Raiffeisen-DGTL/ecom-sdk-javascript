@@ -1,7 +1,7 @@
 {
   "name": "@raiffeisen-ecom/payment-sdk",
   "version": "1.1.17",
-  "description": "",
+  "description": "Ecommerce payment API SDK",
   "main": "lib/index.js",
   "author": "user-ecom-git",
   "scripts": {
