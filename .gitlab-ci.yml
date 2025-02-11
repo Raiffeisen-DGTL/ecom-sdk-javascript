@@ -5,15 +5,11 @@ stages:
 include:
   - project: 'acquiring/devops/pipelines'
     ref: master
-    file: '.checkmarx.yml'
+    file: '.appscreener.yml'
 
 variables:
   VERSION: 1.1.$CI_PIPELINE_IID
   APP_NAME: ecom-sdk-javascript
-
-checkmarx:
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 push:
   stage: deploy
