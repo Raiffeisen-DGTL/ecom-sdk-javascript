@@ -152,6 +152,7 @@ paymentPage.replace({amount: 10.10});
 * receipt (Object)
   * receiptNumber (String) `maxLength: 99
 ` – уникальный номер чека. Формат `A-Za-z0-9_-`;
+  * onlinePayment (Boolean) `required` - признак расчета в Интернете;
   * customer (Object) – данные о покупателе;
     * email (String) `required` `maxLength: 64` - электронный адрес покупателя для отправки чека;
     * name (String) `maxLength: 256` - ФИО покупателя;
@@ -187,6 +188,8 @@ paymentPage.replace({amount: 10.10});
 
 * receipt (Object)
     * receiptNumber (String) `maxLength: 99` – уникальный номер чека. Формат `A-Za-z0-9_-`;
+    * onlinePayment (Boolean) `required` - признак расчета в Интернете;
+    * timezone (string) `required` - часовая зона `+02:00, +03:00... +12:00`;
     * customer (Object) – данные о покупателе;
         * email (String) `required` `maxLength: 64` – электронный адрес покупателя для отправки чека;
         * extra (Object) – дополнительная информация о покупателе. Заполняется как объект свободного наполнения;
@@ -215,6 +218,7 @@ paymentPage.replace({amount: 10.10});
           * code (Object) `required` – код маркировки
             * format (String) `required` – формат кода маркировки ['UNKNOWN', 'EAN8', 'EAN13', 'ITF14', 'GS1M', 'SHORT', 'FUR', 'EGAIS20', 'EGAIS30']
             * value (String) `required` – код маркировки в соответствии с форматом;
+            * plannedStatus (Number) - планируемый статус маркированного торвара. Только маркировок вида 'GS1M' и 'SHORT' `1, 2... 6`;
     * payments (Object[]) – данные об оплате, только для чеков с зачетом аванса или частичной предоплаты. Если payments не передан, то по умолчанию заполняется безналичным видом оплаты и ее суммой, которая равна сумме чека;
         * type (String) `required` – вид оплаты ['E_PAYMENT', 'PREPAID'].
             * E_PAYMENT – безналичная оплата
@@ -231,6 +235,8 @@ paymentPage.openPopup({
   "amount": 1200,
   "receipt": {
       "receiptNumber": "3000827351831",
+      "onlinePayment": true,
+      "timezone": "+02:00",
       "customer": {
           "email": "customer@domain.ru"
       },
