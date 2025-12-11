@@ -2,7 +2,6 @@ import Component from 'src/utils/component';
 
 import { Paranja } from 'src/components/Paranja';
 import { addClass } from 'src/utils/classList';
-import { CROSS } from 'src/constants/icons';
 import style from './style.css';
 
 export class PaymentPage extends Component {
@@ -24,9 +23,20 @@ export class PaymentPage extends Component {
         addClass(cover, style.cover);
 
         const cross = document.createElement('div');
-        cross.innerHTML = CROSS;
         addClass(cross, style.cross);
         cross.addEventListener('click', this.handleClickCross);
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('width', '28');
+        svg.setAttribute('height', '28');
+        svg.setAttribute('viewBox', '0 0 28 28');
+        svg.setAttribute('fill', 'white');
+
+        const path = document.createElementNS(svgNS, 'path');
+        path.setAttribute('d', 'M11.5255 14L0 25.5255V28H2.4745L14 16.4745L25.5255 28H28V25.5255L16.4745 14L28 2.4745V0H25.5255L14 11.5255L2.4745 0H0V2.4745L11.5255 14Z');
+
+        svg.appendChild(path);
+        cross.appendChild(svg);
 
         const wrap = document.createElement('div');
         addClass(wrap, style.wrap);
