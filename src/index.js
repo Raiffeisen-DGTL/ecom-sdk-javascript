@@ -5,10 +5,11 @@ import { VERSION } from 'src/constants/version';
 import { POPUP_POSTFIX } from 'src/constants';
 import { SUCCESS_RESULT, FAILED_RESULT } from 'src/constants/messages';
 import { addMessageListener, removeMessageListener } from 'src/utils/bindListener';
-import prepareUrl from 'src/utils/prepareUrl';
 import changeLocation from 'src/utils/changeLocation';
 import 'promise-polyfill/src/polyfill';
 import { disableScroll, enableScroll } from './utils/scroll';
+import parseUrl from './utils/parseUrl';
+import prepareArgs from './utils/prepareArgs';
 
 const prepareValue = value => {
     if (value instanceof Object) {
@@ -23,7 +24,9 @@ const prepareValue = value => {
 };
 
 class PaymentPageSdk {
-    constructor(publicId, options = {}) {
+    constructor(...args) {
+        const [publicId, options = {}] = prepareArgs(args);
+
         if (options.targetElem instanceof HTMLElement) {
             this.mount = options.targetElem;
         } else {
@@ -32,7 +35,10 @@ class PaymentPageSdk {
 
         this.publicId = publicId;
         this.version = VERSION;
-        this.url = prepareUrl(options.url || 'https://pay.raif.ru/pay');
+
+        const { origin, payformId } = parseUrl(options.url || 'https://pay.raif.ru/pay');
+        this.url = origin;
+        this.payformId = payformId;
     }
 
     closePopup = resolve => () => {
@@ -100,7 +106,11 @@ class PaymentPageSdk {
         const { publicId, version } = this;
         const { style, extra } = props;
 
-        const paymentData = {
+        const paymentData = this.payformId ? {
+            payformId: this.payformId,
+            style,
+            version
+        } : {
             ...props, publicId, style, extra, version, successUrl: '#', failUrl: '#'
         };
 
@@ -128,7 +138,11 @@ class PaymentPageSdk {
         const { publicId, version } = this;
         const { style, extra } = props;
 
-        const paymentData = {
+        const paymentData = this.payformId ? {
+            payformId: this.payformId,
+            style,
+            version
+        } : {
             ...props, publicId, style, version, extra
         };
 
@@ -139,7 +153,11 @@ class PaymentPageSdk {
         const { publicId, version } = this;
         const { style, extra } = props;
 
-        const paymentData = {
+        const paymentData = this.payformId ? {
+            payformId: this.payformId,
+            style,
+            version
+        } : {
             ...props, publicId, style, version, extra
         };
 
