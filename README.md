@@ -240,7 +240,7 @@ paymentPage.replace({
       * PREPAYMENT – частичная предоплата до момента передачи предмета расчета;
     * measurementUnit (String) `maxLength: 16` – единица измерения товара, работы, услуги, иного предмета расчета;
     * nomenclatureCode (String) `maxLength: 150` – номенклатурный код товара в 16-ричном представлении с пробелами или в формате GS1 DataMatrix. Например, "00 00 00 00 12 00 AB 00" или "010463003407001221CMK45BrhN0WLf";
-    * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120', 'VAT5', 'VAT105', 'VAT7', 'VAT107'];
+    * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120', 'VAT5', 'VAT105', 'VAT7', 'VAT107', 'VAT22', 'VAT122'];
     * agentType (String) – признак агента по предмету расчета. Заполняется только для операций через агента ['BANK_PAYING_AGENT', 'BANK_PAYING_SUBAGENT', 'PAYING_AGENT', 'PAYING_SUBAGENT', 'ATTORNEY' , 'COMMISSION_AGENT', 'ANOTHER'];
     * supplierInfo (Object) – данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
       * phone (String) – телефон поставщика. Заполняется по формату "+79991234567", после кода +7 должно быть указано 10 цифр;
@@ -276,7 +276,7 @@ paymentPage.replace({
             * ADVANCE – аванс
             * PREPAYMENT – частичная предоплата до момента передачи предмета расчета;
         * measurementUnit (String) – единица измерения товара, работы, услуги, иного предмета расчета ['PIECE', 'GRAM', 'KILOGRAM', 'TON', 'CENTIMETER', 'DECIMETER', 'METER', 'SQUARE_CENTIMETER', 'SQUARE_DECIMETER', 'SQUARE_METER', 'MILLILITER', 'LITER', 'CUBIC_METER', 'KILOWATT_HOUR', 'GIGACALORIE', 'DAY', 'HOUR', 'MINUTE', 'SECOND', 'KILOBYTE', 'MEGABYTE', 'GIGABYTE', 'TERABYTE', 'OTHER']. Если передано значение вне списка выше, то в ОФД автоматически будет передано OTHER;
-        * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120', 'VAT5', 'VAT105', 'VAT7', 'VAT107'];
+        * vatType (String) `required` – ставка НДС ['NONE', 'VAT0', 'VAT10', 'VAT110', 'VAT20', 'VAT120', 'VAT5', 'VAT105', 'VAT7', 'VAT107', 'VAT22', 'VAT122'];
         * agentType (String) – признак агента по предмету расчета. Заполняется только для операций через агента ['BANK_PAYING_AGENT', 'BANK_PAYING_SUBAGENT', 'PAYING_AGENT', 'PAYING_SUBAGENT', 'ATTORNEY' , 'COMMISSION_AGENT', 'ANOTHER'];
         * supplierInfo (Object) – данные о поставщике. Обязательно к заполнению, если заполнен параметр agentType;
             * phone (String) – телефон поставщика. Заполняется по формату "+79991234567", после кода +7 должно быть указано 10 цифр;
