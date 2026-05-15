@@ -270,7 +270,7 @@ paymentPage.replace({
         * quantity (Number) `required` – количество/вес (5 символов на целую часть, 3 - на дробную);
         * amount (Number) `required` – итоговая сумма в рублях (8 символов на целую часть, 2 - на дробную);
         * paymentObject (String) – признак предмета расчёта ['COMMODITY', 'COMMODITY_MARKING_NO_CODE', 'COMMODITY_MARKING_WITH_CODE', 'EXCISE', 'EXCISE_MARKING_NO_CODE', 'EXCISE_MARKING_WITH_CODE', 'JOB', 'SERVICE', 'PAYMENT', 'ANOTHER']. Для авансовых чеков и чеков частичной предоплаты должен заполняться значением PAYMENT. Если параметр не передан, то заполняется значением COMMODITY по умолчанию;
-        * paymentMode (String) – способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT', 'ADVANCE', 'PREPAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
+        * paymentMode (String) – способ расчета ['FULL_PREPAYMENT', 'FULL_PAYMENT', 'ADVANCE', 'PREPAYMENT', 'CREDIT_PAYMENT']. Если параметр не передан, по умолчанию устанавливается значение FULL_PREPAYMENT.
             * FULL_PREPAYMENT – 100% предоплата до момента передачи предмета расчета
             * FULL_PAYMENT – полная оплата в момент передачи предмета расчета
             * ADVANCE – аванс
